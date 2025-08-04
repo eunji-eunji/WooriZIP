@@ -1,0 +1,441 @@
+<!-- templates/index/header.html -->
+<header class="header" th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- 구글 폰트 로드 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 헤더 아래 콘텐츠가 가려지지 않도록 body에 상단 여백 추가 */
+        body {
+            padding-top: 70px;
+        }
+        .header-inner {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .logo a {
+            font-size: 35px;
+            font-family: "Stardos Stencil", system-ui;
+            font-weight: 700;
+            font-style: normal;
+            color: #B17457;
+            text-decoration: none;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* 중앙 메뉴 */
+        .gnb-group-1 {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 80px; /* 상하 동일 간격 */
+        }
+
+        .gnb-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* 개별 드롭다운 스타일 수정 */
+        .dropdown-column {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 10px 0;
+            z-index: 1000;
+            min-width: 160px;
+            height: auto;
+        }
+
+
+
+        .gnb-label {
+            color: #4A4947;
+            font-size: 18px;
+            padding: 8px 12px;
+            cursor: default;
+        }
+
+        /* 관리자 메뉴 탭 색상 */
+        .gnb-item:last-child .gnb-label {
+            color: #4A4947;
+        }
+
+        /* 관리자 로그인 시에만 관리자 메뉴 색상 변경 */
+        .admin-logged-in .gnb-item:last-child .gnb-label {
+            color: #B17457;
+        }
+
+        .dropdown-column {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 10px 0;
+            z-index: 1000;
+            min-width: 160px;
+            height: auto;
+        }
+
+        .dropdown-column a {
+            display: block;
+            padding: 10px 16px;
+            font-size: 14px;
+            color: #4A4947;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .dropdown-column a:hover {
+            background-color: #f1eee8;
+        }
+
+        /* 통합 드롭다운 컨테이너 */
+        .unified-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 0;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+
+        .unified-dropdown-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            padding: 0 20px;
+        }
+
+        .unified-dropdown-section {
+            flex: 0 0 auto;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        /* 관리자 로그인 시에만 적용되는 스타일 */
+        .admin-logged-in .unified-dropdown-section:first-child {
+            position: relative;
+            left: -10px;
+        }
+
+        .admin-logged-in .unified-dropdown-section:nth-child(2) {
+            position: relative;
+            left: -10px;
+        }
+
+        .admin-logged-in .unified-dropdown-section:nth-child(3) {
+            position: relative;
+            left: -10px;
+        }
+
+        .admin-logged-in .unified-dropdown-section:nth-child(4) {
+            position: relative;
+            left: 10px;
+        }
+
+
+
+        /* 헤더 메뉴와 동일한 간격으로 배치 */
+        .unified-dropdown-section:first-child {
+            margin-left: 5px;
+        }
+
+        .unified-dropdown-section:nth-child(2) {
+            margin-left: 10px;
+        }
+
+        .unified-dropdown-section:nth-child(3) {
+            margin-left: 10px;
+        }
+
+        /* 관리자 로그인 시에만 적용 */
+        .admin-logged-in .unified-dropdown-section:first-child {
+            margin-left: 10px;
+        }
+
+        .admin-logged-in .unified-dropdown-section:nth-child(2) {
+            margin-left: 10px;
+        }
+
+        .admin-logged-in .unified-dropdown-section:nth-child(3) {
+            margin-left: 0px;
+        }
+
+        .admin-logged-in .unified-dropdown-section:nth-child(4) {
+            margin-left: -30px;
+        }
+
+        .unified-dropdown-section a {
+            display: block;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #4A4947;
+            text-decoration: none;
+            white-space: nowrap;
+            margin: 2px 0;
+        }
+
+        .unified-dropdown-section a:hover {
+            background-color: #f1eee8;
+            border-radius: 4px;
+        }
+
+        /* 관리자 드롭다운 메뉴 링크 색상 */
+        .unified-dropdown-section:last-child a {
+            color: #4A4947;
+        }
+
+        .unified-dropdown-section:last-child a:hover {
+            background-color: #f1eee8;
+            border-radius: 4px;
+        }
+
+        /* 관리자 로그인 시에만 관리자 드롭다운 링크 색상 변경 */
+        .admin-logged-in .unified-dropdown-section:last-child a {
+            color: #B17457;
+        }
+
+        /* 개별 드롭다운 숨기기 */
+        .gnb-item:hover .dropdown-column {
+            display: none;
+        }
+
+        .header:hover .dropdown-column {
+            display: none;
+        }
+
+        /* 통합 드롭다운 표시 */
+        .header:hover .unified-dropdown {
+            display: block;
+        }
+
+        /* 우측 gnb 메뉴 */
+        .gnb-group-2 a {
+            color: #4A4947;
+            font-size: 15px;
+            margin: 0 5px;
+            text-decoration: none;
+            display: inline-block;
+            padding: 8px 12px;
+            transition: color 0.2s;
+        }
+
+        .gnb-group-2 a:hover {
+            color: #B17457;
+        }
+
+        /* 관리자 메뉴 */
+        .admin-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .admin-menu-content {
+            display: none;
+            position: absolute;
+            background-color: #F9F7F0;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+        }
+
+        .admin-menu:hover .admin-menu-content {
+            display: block;
+        }
+
+        .admin-menu-content a {
+            color: #4A4947;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .admin-menu-content a:hover {
+            background-color: #e9e5dc;
+        }
+
+        /* 반응형 */
+        @media (max-width: 1200px) {
+            .header-inner {
+                padding: 0 16px;
+            }
+            .gnb-group-1 {
+                gap: 60px;
+            }
+            .gnb-label {
+                font-size: 16px;
+                padding: 6px 10px;
+            }
+            .gnb-group-2 a {
+                font-size: 14px;
+                padding: 6px 8px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                height: 60px;
+            }
+            body {
+                padding-top: 60px !important;
+            }
+            .logo a {
+                font-size: 28px;
+            }
+            .gnb-label {
+                font-size: 14px;
+                padding: 4px 8px;
+            }
+            .gnb-group-2 a {
+                font-size: 12px;
+                padding: 4px 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                height: 55px;
+            }
+            body {
+                padding-top: 55px !important;
+            }
+            .logo a {
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <div class="header-inner" th:class="${loginUser != null and loginUser.role.name() == 'ADMIN'} ? 'header-inner admin-logged-in' : 'header-inner'">
+        <h1 class="logo">
+            <a href="/">WooriZIP</a>
+        </h1>
+
+        <div class="gnb-group-1">
+            <div class="gnb-item">
+                <div class="gnb-label">쇼핑</div>
+                <div class="dropdown-column">
+                    <a href="/products">전체보기</a>
+                    <a href="/products?category=2">가구</a>
+                    <a href="/products?category=35">수납/정리</a>
+                    <a href="/products?category=42">인테리어소품</a>
+                    <a href="/products?category=52">조명</a>
+                    <a href="/products?category=62">생활용품</a>
+                    <a href="/products?category=70">패브릭</a>
+                    <a href="/products?category=81">주방용품</a>
+                </div>
+            </div>
+            <div class="gnb-item">
+                <div class="gnb-label">커뮤니티</div>
+                <div class="dropdown-column">
+                    <a href="/interior">방꾸 게시판</a>
+                    <a href="/interior/write">글작성</a>
+                </div>
+            </div>
+            <div class="gnb-item">
+                <div class="gnb-label">쿠폰</div>
+                <div class="dropdown-column">
+                    <a th:href="@{/event}">쿠폰 발급받기</a>
+                </div>
+            </div>
+            <div th:if="${loginUser != null and loginUser.role.name() == 'ADMIN'}" class="gnb-item">
+                <div class="gnb-label">관리자</div>
+                <div class="dropdown-column">
+                    <a href="/qna/answer/admin/dashboard">QnA 관리</a>
+                    <a href="/admin/coupons">쿠폰 관리</a>
+                    <a href="/admin/product-details">상품상세정보 관리</a>
+                    <a href="/admin/products">상품 관리</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 통합 드롭다운 메뉴 -->
+        <div class="unified-dropdown">
+            <div class="unified-dropdown-content" th:class="${loginUser != null and loginUser.role.name() == 'ADMIN'} ? 'unified-dropdown-content admin-logged-in' : 'unified-dropdown-content'">
+                <div class="unified-dropdown-section">
+                    <a href="/products">전체보기</a>
+                    <a href="/products?category=2">가구</a>
+                    <a href="/products?category=35">수납/정리</a>
+                    <a href="/products?category=42">인테리어소품</a>
+                    <a href="/products?category=52">조명</a>
+                    <a href="/products?category=62">생활용품</a>
+                    <a href="/products?category=70">패브릭</a>
+                    <a href="/products?category=81">주방용품</a>
+                </div>
+                <div class="unified-dropdown-section">
+                    <a href="/interior">방꾸 게시판</a>
+                    <a href="/interior/write">글작성</a>
+                </div>
+                <div class="unified-dropdown-section">
+                    <a th:href="@{/event}">쿠폰 발급받기</a>
+                </div>
+                <div th:if="${loginUser != null and loginUser.role.name() == 'ADMIN'}" class="unified-dropdown-section">
+                    <a href="/qna/answer/admin/dashboard">QnA 관리</a>
+                    <a href="/admin/coupons">쿠폰 관리</a>
+                    <a href="/admin/product-details">상품상세정보 관리</a>
+                    <a href="/admin/products">상품 관리</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="gnb-group-2">
+            <a th:href="@{/chatbot}">💬 챗봇</a>
+            <a th:if="${loginUser == null}" href="/user/login">로그인</a>
+            <a th:if="${loginUser != null}" href="/user/logout">로그아웃</a>
+            <a th:if="${loginUser == null}" href="/user/signup">회원가입</a>
+            <a th:if="${loginUser != null}" href="/user/mypage">마이페이지</a>
+        </div>
+    </div>
+</header>
+
+<div th:replace="~{index/floating-chatbot :: floating-chatbot}"></div>

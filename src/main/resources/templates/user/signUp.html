@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FFFFFF;
+            color: #4A4947;
+            padding-top: 70px !important;
+        }
+        main {
+            max-width: 1100px;
+            width: 100%;
+            margin: 60px auto 60px auto;
+            background-color: #FFF;
+            padding: 40px 40px 30px 40px;
+            box-sizing: border-box;
+        }
+        main > h1 {
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #B17457;
+            text-align: center;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 32px;
+        }
+        .form-group-left, .form-group-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="button"] {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 15px;
+            border: 1px solid #E0E0E0;
+            background-color: #F9F7F0;
+            border-radius: 0;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .flex-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .flex-group input {
+            flex: 1;
+        }
+        .flex-group button {
+            padding: 12px 14px;
+            font-size: 13px;
+            background-color: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            white-space: nowrap;
+            margin-bottom: 10px;
+        }
+        .flex-group button:hover {
+            background-color: #4A4947;
+            color: #fff;
+        }
+        .flex-group .email-at {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            margin: 0 0 10px;
+            padding: 0 6px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        select#domain-select,
+        input#email-domain {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 15px;
+            border: 1px solid #E0E0E0;
+            background-color: #F9F7F0;
+            border-radius: 0;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            flex: 1;
+        }
+        select#domain-select {
+            min-width: 160px; /* 또는 auto로 시도 */
+        }
+
+        .select-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .select-buttons label {
+            flex: 1;
+            padding: 12px 0;
+            text-align: center;
+            background-color: #eee;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s ease;
+        }
+        .select-buttons label:hover {
+            background-color: #ddd;
+        }
+        .select-buttons input:checked + label,
+        .select-buttons label.active {
+            background-color: #B17457;
+            color: #fff;
+            border-color: #B17457;
+        }
+
+        input[type="submit"] {
+            grid-column: 1 / 3;
+            width: 100%;
+            padding: 14px;
+            background-color: #D8D2C2;
+            color: #4A4947;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #B17457;
+            color: #F9F7F0;
+        }
+
+        button[type="submit"] {
+            grid-column: 1 / 3;
+            width: 100%;
+            padding: 14px;
+            background-color: #D8D2C2;
+            color: #4A4947;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover:enabled {
+            background-color: #B17457;
+            color: #F9F7F0;
+        }
+        button[type="submit"]:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .success {
+            color: green;
+            font-size: 14px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        #guide {
+            font-size: 13px;
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+            input[type="submit"] {
+                grid-column: auto;
+            }
+        }
+        @media (max-width: 1200px) {
+            main {
+                padding: 24px 2vw 40px 2vw;
+            }
+        }
+        @media (max-width: 700px) {
+            main {
+                padding: 16px 2vw 32px 2vw;
+            }
+            main > h1 {
+                font-size: 1.5rem;
+            }
+            form {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .flex-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<script>
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+</script>
+
+<body>
+<div th:replace="~{index/header :: header}"></div>
+
+<main>
+    <h1>회원가입</h1>
+    <form action="/user/signup" method="post" onsubmit="return validatePhoneNumber();">
+        <!-- 좌측 컬럼 -->
+        <div class="form-group-left">
+            <div class="flex-group" style="align-items: flex-end;">
+                <label for="email" style="flex: 0 0 auto; margin-bottom: 0;">이메일</label>
+                <div id="emailCheckMsg" style="margin-left: 10px; font-size: 14px;"></div>
+            </div>
+            <div class="flex-group">
+                <input type="hidden" id="email" name="email" required>
+                <input id="email-id" name="emailId" placeholder="아이디" type="text">
+                <span class="email-at">@</span>
+                <input id="email-domain" name="domain" placeholder="직접입력">
+                <select id="domain-select">
+                    <option value="">직접입력</option>
+                    <option value="naver.com">naver.com</option>
+                    <option value="daum.net">daum.net</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="nate.com">nate.com</option>
+                </select>
+            </div>
+
+            <label for="userPw">비밀번호</label>
+            <input type="password" name="userPw" id="userPw" required>
+
+            <div class="flex-group" style="align-items: flex-end;">
+                <label for="checkPw" style="flex: 0 0 auto; margin-bottom: 0;">비밀번호 확인</label>
+                <div id="pwCheckResult" style="margin-left: 10px; font-size: 14px;"></div>
+            </div>
+            <input type="password" name="checkPw" id="checkPw" required>
+
+
+            <label>우편번호</label>
+            <div class="flex-group">
+                <input type="text" id="sample4_postcode" class="zip-only" name="p_code" placeholder="우편번호" required>
+                <button type="button" onclick="sample4_execDaumPostcode()">우편번호 찾기</button>
+            </div>
+
+            <input type="text" id="sample4_roadAddress" name="loadAddr" placeholder="도로명주소" required/>
+            <input type="text" id="sample4_jibunAddress" name="lotAddr" placeholder="지번주소" required/>
+            <input type="text" id="sample4_detailAddress" name="detailAddr" placeholder="상세주소" required/>
+            <input type="text" id="sample4_extraAddress" name="extraAddr" placeholder="참고항목" readonly>
+            <span id="guide" style="color:#999; display:none"></span>
+        </div>
+
+        <!-- 우측 컬럼 -->
+        <div class="form-group-right">
+            <label for="name">이름</label>
+            <input type="text" name="name" id="name" required>
+
+            <label for="nickname">닉네임</label>
+            <div class="flex-group">
+                <input type="text" id="nickname" name="nickname" required>
+            </div>
+            <div id="nicknameCheckMsg"></div>
+
+            <label for="birth">생년월일</label>
+            <input type="date" name="birth" id="birth" required>
+
+            <label for="phone1">휴대전화</label>
+            <div class="flex-group">
+                <input id="phone" name="phone" type="hidden">
+                <input id="phone1" name="phone1" maxlength="3" type="tel" required>
+                <input id="phone2" name="phone2" maxlength="4" type="tel" required>
+                <input id="phone3" name="phone3" maxlength="4" type="tel" required>
+            </div>
+
+            <label>성별</label>
+            <div class="select-buttons" id="genderGroup">
+                <input type="radio" name="gender" id="genderM" value="m" checked hidden>
+                <label for="genderM">남자</label>
+                <input type="radio" name="gender" id="genderF" value="f" hidden>
+                <label for="genderF">여자</label>
+            </div>
+
+            <label>가구 유형</label>
+            <p style="margin: 0 0 6px;">가구 유형에 알맞은 제품들을 추천해드립니다.</p>
+            <div class="select-buttons" id="residenceGroup">
+                <input type="radio" name="residenceType" id="res1" value="1" hidden>
+                <label for="res1">1인가구</label>
+                <input type="radio" name="residenceType" id="res2" value="2" hidden>
+                <label for="res2">다인가구</label>
+                <input type="radio" name="residenceType" id="res0" value="0" checked hidden>
+                <label for="res0">미선택</label>
+            </div>
+        </div>
+
+        <!-- 전체 너비 회원가입 버튼 -->
+        <button type="submit" id="signupBtn" disabled>회원가입</button>
+    </form>
+</main>
+
+<div th:replace="~{index/footer :: footer}"></div>
+<script src="/js/user/signUp.js"></script>
+</body>
+</html>

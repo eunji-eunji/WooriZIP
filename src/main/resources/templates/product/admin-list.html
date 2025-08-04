@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 관리</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-bg: #FFFFFF;
+            --brand-text: #4A4947;
+            --brand-point-bg: #F9F7F0;
+            --brand-point: #B17457;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--brand-bg);
+            color: var(--brand-text);
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            padding-top: 70px !important;
+        }
+
+        main {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 60px 20px 80px 20px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .page-title {
+            color: var(--brand-text);
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-item a {
+            color: var(--brand-point);
+            text-decoration: none;
+        }
+
+        .breadcrumb-item.active {
+            color: #666;
+        }
+
+        /* 드롭다운 섹션 */
+        .dropdown-section {
+            background: var(--brand-point-bg);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .dropdown-section h5 {
+            color: var(--brand-text);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--brand-text);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: #fff;
+            color: var(--brand-text);
+            transition: border-color 0.2s;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--brand-point);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--brand-point);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #8d5a41;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-outline-info {
+            background: transparent;
+            color: #17a2b8;
+            border: 1px solid #17a2b8;
+        }
+
+        .btn-outline-info:hover {
+            background: #17a2b8;
+            color: #fff;
+        }
+
+        .btn-outline-primary {
+            background: transparent;
+            color: var(--brand-point);
+            border: 1px solid var(--brand-point);
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--brand-point);
+            color: #fff;
+        }
+
+        .btn-outline-danger {
+            background: transparent;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+
+        .btn-outline-danger:hover {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .btn-lg {
+            padding: 14px 28px;
+            font-size: 1.1rem;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        .row {
+            display: flex;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .col-md-8 {
+            flex: 2;
+        }
+
+        .col-md-4 {
+            flex: 1;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-top: 16px;
+            display: none;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        /* 섹션 헤더 */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            color: var(--brand-text);
+            font-size: 1.4rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 4px;
+            color: #fff;
+        }
+
+        .bg-secondary {
+            background: #6c757d;
+        }
+
+        /* 상품 그리드 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .product-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 0;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f8f9fa;
+        }
+
+        .card-body {
+            padding: 16px;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--brand-text);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .text-muted {
+            color: #666;
+        }
+
+        .text-primary {
+            color: var(--brand-point);
+        }
+
+        .text-warning {
+            color: #ffc107;
+        }
+
+        .fw-bold {
+            font-weight: 600;
+        }
+
+        .small {
+            font-size: 0.85rem;
+        }
+
+        .card-footer {
+            padding: 16px;
+            background: transparent;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .d-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mb-1 {
+            margin-bottom: 4px;
+        }
+
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+
+        .mb-3 {
+            margin-bottom: 16px;
+        }
+
+        .mb-4 {
+            margin-bottom: 24px;
+        }
+
+        .mt-2 {
+            margin-top: 8px;
+        }
+
+        .mt-3 {
+            margin-top: 16px;
+        }
+
+        .py-5 {
+            padding: 48px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 1200px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            main {
+                padding: 40px 16px 60px 16px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .row {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .col-md-8, .col-md-4 {
+                flex: none;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<script>
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+</script>
+
+<body>
+<div th:replace="~{index/header :: header}"></div>
+
+<main>
+    <div class="page-header">
+        <h2 class="page-title">
+            📦 상품 관리
+        </h2>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">홈</a></li>
+                <li class="breadcrumb-item active">상품 관리</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- 드롭다운 선택 방식 -->
+    <div class="dropdown-section">
+        <h5>
+            📋 빠른 선택
+        </h5>
+        <div class="row">
+            <div class="col-md-8">
+                <label for="productSelect" class="form-label">상품 선택</label>
+                <select id="productSelect" class="form-select">
+                    <option value="">상품을 선택하세요</option>
+                    <option th:each="product : ${products}"
+                            th:value="${product.id}"
+                            th:text="${product.name + ' - ' + product.categoryName}">
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="button" id="goToEditBtn" class="btn btn-primary btn-lg w-100" disabled>
+                    ✏️ 관리하기
+                </button>
+            </div>
+        </div>
+        <div id="selectedInfo" class="alert alert-info">
+            ℹ️
+            <span id="infoText"></span>
+        </div>
+    </div>
+
+    <!-- 상품 카드 목록 -->
+    <div class="mb-4">
+        <div class="section-header">
+            <h5 class="section-title">
+                📦 전체 상품 목록
+                <span class="badge bg-secondary" th:text="${#lists.size(products)}">0</span>
+            </h5>
+            <a href="/products/form" class="btn btn-success">
+                ➕ 새 상품 등록
+            </a>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            <div th:each="product : ${products}" class="product-item">
+                <div class="product-card">
+                    <!-- 상품 이미지 -->
+                    <div th:if="${product.thumbnailUrl != null}">
+                        <img th:src="${product.thumbnailUrl}"
+                             class="product-image"
+                             alt="상품 이미지">
+                    </div>
+                    <div th:unless="${product.thumbnailUrl != null}"
+                         class="product-image">
+                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
+                            📷
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <h6 class="card-title" th:text="${product.name}">상품명</h6>
+                        <p class="card-text text-muted small mb-2">
+                            🏷️
+                            <span th:text="${product.categoryName}">카테고리</span>
+                        </p>
+                        <p class="card-text text-primary fw-bold">
+                            💰
+                            <span th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}">가격</span>원
+                        </p>
+                        <p class="card-text text-muted small">
+                            📦
+                            재고: <span th:text="${product.totalStock}">0</span>개
+                        </p>
+                        <!-- 평균 평점 표시 -->
+                        <p class="card-text" th:if="${product.averageRating > 0}">
+                            ⭐
+                            <span th:text="${#numbers.formatDecimal(product.averageRating, 1, 1)}">4.5</span>
+                            <small class="text-muted">평점</small>
+                        </p>
+                        <p class="card-text" th:if="${product.averageRating == 0}">
+                            <small class="text-muted">평점 없음</small>
+                        </p>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="d-grid">
+                            <a th:href="@{'/products/' + ${product.id}}"
+                               class="btn btn-outline-info btn-sm mb-1">
+                                🔗 상품 바로가기
+                            </a>
+                            <a th:href="@{'/admin/products/' + ${product.id} + '/update'}"
+                               class="btn btn-outline-primary btn-sm mb-1">
+                                ✏️ 수정하기
+                            </a>
+                            <button type="button"
+                                    class="btn btn-outline-danger btn-sm delete-product-btn"
+                                    th:data-product-id="${product.id}"
+                                    th:data-product-name="${product.name}">
+                                🗑️ 삭제하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 상품이 없을 때 -->
+        <div th:if="${#lists.isEmpty(products)}" class="text-center py-5">
+            <div style="font-size: 4rem; color: #ccc; margin-bottom: 16px;">📦</div>
+            <h5 class="text-muted mt-3">등록된 상품이 없습니다</h5>
+            <a href="/products/form" class="btn btn-primary mt-2">
+                ➕ 상품 등록하기
+            </a>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{index/footer :: footer}"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // 드롭다운 선택 처리
+        $('#productSelect').on('change', function() {
+            const selectedProductId = $(this).val();
+            const selectedOption = $(this).find('option:selected');
+
+            if (selectedProductId) {
+                $('#goToEditBtn').prop('disabled', false);
+
+                const productName = selectedOption.text();
+                $('#infoText').html(`<strong>${productName}</strong><br>상품을 수정할 수 있습니다.`);
+                $('#selectedInfo').show();
+            } else {
+                $('#goToEditBtn').prop('disabled', true);
+                $('#selectedInfo').hide();
+            }
+        });
+
+        // 수정하기 버튼 클릭
+        $('#goToEditBtn').on('click', function() {
+            const selectedProductId = $('#productSelect').val();
+            if (selectedProductId) {
+                location.href = `/admin/products/${selectedProductId}/update`;
+            }
+        });
+
+        // 삭제 기능
+        $('.delete-product-btn').on('click', function(e) {
+            e.stopPropagation();
+            const productId = $(this).data('product-id');
+            const productName = $(this).data('product-name');
+
+            if (confirm(`"${productName}" 상품을 정말 삭제하시겠습니까?\n\n이 작업은 되돌릴 수 없습니다.`)) {
+                $.ajax({
+                    url: `/admin/products/delete/${productId}`,
+                    type: 'POST',
+                    success: function(response) {
+                        if (response && response.success) {
+                            alert(response.message || '상품이 삭제되었습니다.');
+                            location.reload();
+                        } else {
+                            alert(response.message || '삭제 중 오류가 발생했습니다.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', {xhr, status, error});
+                        alert('삭제 요청 중 오류가 발생했습니다.');
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html> 

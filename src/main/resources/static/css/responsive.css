@@ -1,0 +1,76 @@
+/* responsive.css */
+
+@media (max-width: 1024px) {
+    .container {
+        max-width: 100%;
+        padding: 0 var(--spacing-6);
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --spacing-1: 3px;
+        --spacing-2: 6px;
+        --spacing-3: 10px;
+        --spacing-4: 14px;
+        --spacing-5: 18px;
+        --spacing-6: 22px;
+        --spacing-8: 28px;
+        --spacing-10: 36px;
+        --spacing-12: 44px;
+    }
+    
+    .container {
+        padding: 0 var(--spacing-4);
+    }
+    
+    .row {
+        flex-direction: column;
+    }
+    
+    .col {
+        width: 100%;
+        margin-bottom: var(--spacing-4);
+    }
+    
+    h1 { font-size: var(--font-size-4xl); }
+    h2 { font-size: var(--font-size-3xl); }
+    h3 { font-size: var(--font-size-2xl); }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .card {
+        margin-bottom: var(--spacing-4);
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --font-size-base: 14px;
+        --font-size-lg: 16px;
+        --font-size-xl: 18px;
+        --font-size-2xl: 20px;
+        --font-size-3xl: 24px;
+        --font-size-4xl: 28px;
+    }
+    
+    .container {
+        padding: 0 var(--spacing-3);
+    }
+    
+    .card-header,
+    .card-body,
+    .card-footer {
+        padding: var(--spacing-4);
+    }
+    
+    .form-input,
+    .form-textarea,
+    .form-select {
+        font-size: var(--font-size-base);
+    }
+}
+

@@ -1,0 +1,113 @@
+/* pages/product.css - 상품 페이지 스타일 */
+
+/* === 공통 네임스페이스 === */
+.product-page,
+.product-detail-page,
+.product-edit-page {
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* === 목록 페이지 === */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-6);
+}
+
+.product-card {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-white);
+  transition: box-shadow var(--transition-fast);
+}
+.product-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.product-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.sort-select {
+  margin-left: auto;
+}
+
+/* === 상세 페이지 === */
+.product-gallery {
+  display: flex;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+.product-gallery img {
+  max-width: 100%;
+  border-radius: var(--radius-md);
+}
+
+.product-desc {
+  font-size: var(--font-size-base);
+  line-height: var(--line-relaxed);
+  color: var(--text-secondary);
+  margin-top: var(--space-4);
+}
+
+.option-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.price-box {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-brand);
+  margin-top: var(--space-4);
+}
+
+.buy-actions {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  flex-wrap: wrap;
+}
+
+/* === 수정 페이지 === */
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.image-preview {
+  max-width: 300px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  background-color: var(--color-cream);
+}

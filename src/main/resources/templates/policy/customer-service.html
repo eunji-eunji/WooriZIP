@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객센터</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #4A4947;
+            background-color: #fff;
+            padding-top: 70px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 60px;
+            color: #B17457;
+            font-size: 36px;
+            font-weight: 700;
+        }
+        
+        .service-hero {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, #F9F7F0 0%, #fff 100%);
+            border-radius: 15px;
+        }
+        
+        .service-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .service-title {
+            font-size: 24px;
+            color: #B17457;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .service-description {
+            font-size: 16px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .contact-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .contact-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #B17457;
+            margin-bottom: 10px;
+        }
+        
+        .contact-info {
+            font-size: 16px;
+            color: #4A4947;
+            margin-bottom: 5px;
+        }
+        
+        .contact-time {
+            font-size: 14px;
+            color: #888;
+        }
+        
+        .faq-section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            color: #B17457;
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .faq-item {
+            background: #fff;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            background: #F9F7F0;
+            cursor: pointer;
+            font-weight: 600;
+            color: #4A4947;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: #e9e5dc;
+        }
+        
+        .faq-question.active {
+            background: #B17457;
+            color: #fff;
+        }
+        
+        .faq-arrow {
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-question.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        
+        .faq-answer.active {
+            padding: 20px;
+            max-height: 200px;
+        }
+        
+        .faq-answer p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .faq-answer ul {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .faq-answer li {
+            margin-bottom: 5px;
+        }
+        
+        .info-section {
+            background: #F9F7F0;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+        
+        .info-title {
+            color: #B17457;
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .info-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .info-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .info-item h4 {
+            color: #B17457;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .info-item p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .service-hero {
+                padding: 30px 20px;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .info-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div th:replace="~{index/header :: header}"></div>
+    
+    <main>
+        <div class="container">
+            <h1 class="page-title">고객센터</h1>
+            
+            <div class="service-hero">
+                <div class="service-icon">💬</div>
+                <div class="service-title">언제든지 문의해 주세요</div>
+                <div class="service-description">
+                    고객님의 소중한 의견과 문의사항을 언제든지 받아드리고 있습니다. 
+                    빠르고 정확한 답변으로 도움을 드리겠습니다.
+                </div>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-title">전화 상담</div>
+                    <div class="contact-info">1234-5678</div>
+                    <div class="contact-time">평일 09:00 ~ 18:00</div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">💬</div>
+                    <div class="contact-title">챗봇 상담</div>
+                    <div class="contact-info">24시간 이용 가능</div>
+                    <div class="contact-time">실시간 자동 응답</div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-title">이메일 문의</div>
+                    <div class="contact-info">cs@woorizip.com</div>
+                    <div class="contact-time">24시간 접수 가능</div>
+                </div>
+            </div>
+            
+            <div class="faq-section">
+                <h2 class="section-title">자주 묻는 질문</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        주문 후 배송은 언제 되나요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>주문 후 배송은 다음과 같이 진행됩니다:</p>
+                        <ul>
+                            <li>결제 완료 후 1-2일 내 출고</li>
+                            <li>택배 배송은 1-3일 소요</li>
+                            <li>도서산간 지역은 추가 1-2일 소요</li>
+                            <li>배송 조회는 주문내역에서 확인 가능</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        교환/반품은 어떻게 하나요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>교환/반품은 다음과 같이 진행됩니다:</p>
+                        <ul>
+                            <li>상품 수령 후 7일 이내 신청 가능</li>
+                            <li>상품 상태가 원상태여야 함</li>
+                            <li>마이페이지에서 교환/반품 신청</li>
+                            <li>택배비는 고객 부담 (단순 변심 시)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        회원가입은 어떻게 하나요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>회원가입은 다음과 같이 진행됩니다:</p>
+                        <ul>
+                            <li>홈페이지 우측 상단 '회원가입' 클릭</li>
+                            <li>필수 정보 입력 (이름, 이메일, 비밀번호)</li>
+                            <li>이메일 인증 완료</li>
+                            <li>가입 완료 후 로그인 가능</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        쿠폰은 어떻게 사용하나요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>쿠폰 사용 방법:</p>
+                        <ul>
+                            <li>이벤트 페이지에서 쿠폰 발급</li>
+                            <li>주문 시 쿠폰 선택하여 적용</li>
+                            <li>중복 사용 불가</li>
+                            <li>유효기간 내 사용 필수</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        결제 방법은 어떤 것들이 있나요?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>다음과 같은 결제 방법을 제공합니다:</p>
+                        <ul>
+                            <li>신용카드 (VISA, MASTER, 국내 카드사)</li>
+                            <li>계좌이체</li>
+                            <li>무통장입금</li>
+                            <li>간편결제 (카카오페이, 네이버페이)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <h3 class="info-title">고객센터 정보</h3>
+                <div class="info-content">
+                    <div class="info-item">
+                        <h4>운영시간</h4>
+                        <p>평일: 09:00 ~ 18:00<br>
+                        주말/공휴일: 휴무<br>
+                        점심시간: 12:00 ~ 13:00</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>회사 정보</h4>
+                        <p>상호: (주)Woori.ZIP<br>
+                        대표: 김효영<br>
+                        사업자등록번호: 123-45-67890</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>주소</h4>
+                        <p>서울 구로구 디지털로 306<br>
+                        WooriZIP 빌딩 5층<br>
+                        우편번호: 08389</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>연락처</h4>
+                        <p>전화: 1234-5678<br>
+                        팩스: 02-1234-5678<br>
+                        이메일: cs@woorizip.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 푸터 -->
+    <div th:replace="~{index/footer :: footer}"></div>
+    
+    <!-- 헤더 스크롤 스크립트 -->
+    <script>
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            } else {
+                header.style.backgroundColor = '#fff';
+                header.style.boxShadow = 'none';
+            }
+        });
+        
+        // FAQ 아코디언 기능
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const isActive = this.classList.contains('active');
+                
+                // 모든 FAQ 닫기
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                });
+                document.querySelectorAll('.faq-answer').forEach(a => {
+                    a.classList.remove('active');
+                });
+                
+                // 클릭된 FAQ만 열기
+                if (!isActive) {
+                    this.classList.add('active');
+                    answer.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,230 @@
+[33me8027de[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;32mKGH[m[33m)[m 0728kw주문완료금액출력
+[33m15ea315[m Merge pull request #65 from go-nu/dk
+[33mabb767e[m[33m ([m[1;31morigin/dk[m[33m)[m 리뷰랑 상품관리자 상품관리페이지 병합
+[33mf4f101c[m Merge pull request #64 from go-nu/dk
+[33m50cb102[m 물품상세페이지 상품 품절시 장바구니 및 구매하기버튼 비활성화 수정
+[33me04e249[m Merge pull request #63 from go-nu/KGH
+[33m642b863[m[33m ([m[1;31morigin/KGH[m[33m)[m KGH 0728 QNA비밀글 작성기능 및 챗봇수정
+[33m8a428e9[m Merge pull request #62 from go-nu/dk
+[33m37fc958[m 관리자 상품관리창 재고 수 수정
+[33m816f239[m Merge pull request #61 from go-nu/KGH
+[33me31feee[m KGH 0728 상품카테고리 및 챗봇 수정
+[33m97455bf[m Merge pull request #60 from go-nu/hyo0
+[33mdb35dbe[m[33m ([m[1;31morigin/hyo0[m[33m)[m Merge branch 'main' into hyo0
+[33m738664d[m 0725 hyo0 main, footer css 리펙토링
+[33mfe0aead[m 0725 hyo0 orderpayment css
+[33mcf6f658[m 0725 hyo0 event page css
+[33m23cbfca[m Merge pull request #59 from go-nu/hyo0
+[33m599a87f[m 0725 hyo0 chatbot css
+[33m9fdf857[m 0725 hyo0 upload 이미지 추가
+[33ma5e853a[m Merge pull request #58 from go-nu/hyo0
+[33m791d38a[m Merge pull request #57 from go-nu/KGH
+[33me3adef1[m 0725 hyo0 interior part css 작업
+[33m114e114[m KGH 0728 리뷰 ,Qna 구매연동 / 챗봇 경로수정
+[33m9dd91ab[m merge conflict resolved
+[33mfe461c1[m Merge pull request #56 from go-nu/dk
+[33m09b4a3b[m 사용자 상품 목록보기 리뷰 수 추가
+[33mc5e2e60[m 0727kw인기상품,쿠폰활성화
+[33m29eeaa2[m Merge pull request #55 from go-nu/nej
+[33m605dea5[m[33m ([m[1;31morigin/nej[m[33m)[m Merge remote-tracking branch 'origin/main' into nej
+[33m0f721b9[m 0726nej 결제 시 재고 감소 및 안쓰는 함수 제거
+[33m72cf444[m Merge pull request #54 from go-nu/dk
+[33me57639a[m 0725 마지막금요일 푸시
+[33mb755fa7[m nej
+[33m53a8853[m Merge remote-tracking branch 'origin/main' into nej
+[33m119f800[m nej
+[33md44da93[m 0725kw쿠폰 수정 및 카트 원상복구
+[33m8d1e3f1[m KGH 0725 t
+[33m0083431[m Merge pull request #53 from go-nu/nej
+[33m76ccebf[m 0725nej 바로구매 db 저장2
+[33m2567ca9[m 0725nej 바로구매 db 저장
+[33m62069f0[m Merge pull request #52 from go-nu/hyo0
+[33m1d34ff9[m 0725 hyo0 upload 이미지
+[33md8f60df[m Merge branch 'main' into hyo0
+[33mce6867c[m Merge pull request #51 from go-nu/KGH
+[33m9b1c0f5[m 0725 hyo0 cart css
+[33m849bc18[m KGH 0725 쿠폰사용처리
+[33m702df81[m KGH 0725 쿠폰적용
+[33ma5ceb23[m Merge pull request #49 from go-nu/nej
+[33mcac63b7[m 0725nej 결제 후 장바구니 삭제2
+[33m8d063a6[m 0725nej 결제 후 장바구니 삭제
+[33m2f8bbf1[m Merge pull request #48 from go-nu/KGH
+[33m6ab0c0f[m KGH 0725 카트상품 쿠폰액수 수정 및적용
+[33m5be837f[m Merge pull request #47 from go-nu/KGH
+[33m161c419[m KGH 0725 오더에 쿠폰적용
+[33mee93033[m 0725kw수정2
+[33mc631023[m Merge pull request #46 from go-nu/hyo0
+[33ma489fab[m Merge branch 'main' into hyo0
+[33m35f5af1[m 0725 hyo0 admin coupon page css
+[33mdef01d0[m 0725 hyo0 상품수정 page css
+[33m1db3993[m Merge pull request #45 from go-nu/KGH
+[33mb3ab784[m KGH 0725 상품리뷰 평점 기능 수정
+[33me65e83e[m 0725 hyo0 QnA dashboard css 작업
+[33ma7dc480[m Merge branch 'main' into hyo0
+[33m8b94bb6[m 0725kw수정1242
+[33m14d37f9[m Merge pull request #44 from go-nu/KGH
+[33mbddd175[m KGH 0725 관리자qna관리창 수정
+[33mff1606c[m Merge pull request #43 from go-nu/nej
+[33m962b016[m Merge remote-tracking branch 'origin/main' into nej
+[33mc81bfb8[m 0725nej 결제 장바구니 수정
+[33m50c8a50[m 0725kw복구
+[33mb2cf2b0[m Merge branch 'main' into hyo0
+[33mb394472[m Merge remote-tracking branch 'origin/main'
+[33m754a35e[m 0724 hyo0 product-detail css 작업
+[33m35118bd[m Merge pull request #42 from go-nu/KGH
+[33md6875e1[m KGH 0725 메인 + 관리자 페이지 수정
+[33me41853c[m 0724kw상품추천
+[33m73dc8e0[m 0724 hyo0 product css 설정
+[33m184cf5d[m 0724 hyo0 header, footer 사이즈 지정
+[33m0df3181[m Merge pull request #41 from go-nu/nej
+[33m0954919[m nej 매퍼컨피그 삭제
+[33m8b8a59c[m Merge pull request #40 from go-nu/nej
+[33m10e8a4c[m 0724nej장바구니 선택 구매
+[33m580fbe2[m Merge pull request #39 from go-nu/KGH
+[33m61c4817[m KGH 0724 챗봇리모콘 + 버그수정
+[33mcb74e77[m nej
+[33md76404d[m nej
+[33m7a592ea[m Merge pull request #38 from go-nu/dk
+[33m53f5050[m 상품수정 페이지 디테일부분 정상화
+[33mc075114[m Merge pull request #37 from go-nu/KGH
+[33m994f3db[m KGH 0724 챗봇보완 + 상품수정기능 정상화
+[33m8eb77fc[m Merge pull request #36 from go-nu/hyo0
+[33mabfa53f[m 0724 hyo0 마이 페이지 css 적용
+[33mc980434[m 0724 hyo0 pw 찾기 css 적용
+[33mf851004[m 0724 hyo0 아이디 찾기 css 적용
+[33m54400b0[m Merge pull request #35 from go-nu/KGH
+[33mf6c3316[m KGH 0724 인테리어게시판css + 챗봇기초
+[33m6d9c668[m 0724 hyo0 기존 css 적용
+[33m426f008[m 0724 hyo0 product css작업
+[33m36e6c3c[m 0724 hyo0 product css작업
+[33ma38af9b[m Merge branch 'main' into hyo0
+[33m4c0a251[m nej
+[33m4aee9cb[m nej
+[33m0319308[m Merge pull request #34 from go-nu/dk
+[33mf7851e6[m 상품관련 수정작업 0723
+[33m6cd4ada[m Merge pull request #33 from go-nu/KGH
+[33m392a193[m KGH 0723 게시판이미지첨부기능수정 + 쿠폰 프론트만
+[33m20317ee[m 0723kwCartCoupon
+[33ma0843db[m nej
+[33m61278a6[m nej수정중
+[33m25291f6[m Merge pull request #32 from go-nu/KGH
+[33m4b6d7f0[m KGH 0723 상품등록창 추가
+[33m7904536[m Merge pull request #31 from go-nu/dk
+[33mbe181cf[m 카테고리 선택지 증가
+[33m3f39f1c[m Merge pull request #30 from go-nu/KGH
+[33m4fffb14[m KGH 0722 메인페이지 게시판 버그수정
+[33m0df3d2b[m Merge pull request #29 from go-nu/KGH
+[33m28d0545[m kGH 0722 메인페이지 게시판추가
+[33mfd0b50f[m Merge pull request #28 from go-nu/dk
+[33m325134d[m 수정정상화
+[33m9537a6b[m Merge remote-tracking branch 'origin/main' into dk
+[33ma7a25a2[m Merge branch 'main' of https://github.com/go-nu/WooriZIP
+[33m7801f1d[m 0722kw오류수정
+[33m982edb7[m 세부 이미지 추가
+[33m22f5df5[m Merge pull request #27 from go-nu/KGH
+[33m4c1990f[m KGH 0722 공지사항추가
+[33mc838a2d[m 0722kwCart복구
+[33mb5a589d[m Merge pull request #26 from go-nu/KGH
+[33m8ac628d[m KGH 0722 인테리어게시판 공지 + 마이페이지 작성글확인 기능
+[33mdf5a541[m nej수정중
+[33m5ec05e0[m nej수정중
+[33m9065bcf[m 0721kw로그수정 및 커밋정리
+[33madc3c74[m Merge pull request #25 from go-nu/dk
+[33ma8ec516[m 상품등록 및 수정 정상화 0721
+[33m69fcb1f[m Merge remote-tracking branch 'origin/main' into nej
+[33mfebf6fd[m nej0721 장바구니 삭제
+[33m947e88e[m 0721kw마이페이지찜
+[33md699400[m Merge branch 'main' into hyo0
+[33m8f53b05[m 0721 hyo0 user 파트 css 수정
+[33m4ae1c58[m Merge remote-tracking branch 'origin/main' into nej
+[33m287ba7a[m nej
+[33mc4a4b09[m Merge pull request #24 from go-nu/dk
+[33m8ea9c13[m 상품등록 및 옵션조합 정상화 0718/18시12분
+[33m5be019a[m nej수정중
+[33mde420d1[m nej수정중
+[33mc7963e0[m 0718kw수정
+[33m211d37d[m Merge pull request #23 from go-nu/nej
+[33mac9ba57[m Merge remote-tracking branch 'origin/main' into nej
+[33m62b76cf[m Merge pull request #22 from go-nu/dk
+[33m4dec0ec[m 상세페이지의 옵션 보기 정상화
+[33mdb1ee2e[m Merge branch 'main' into dk
+[33m745f7f2[m Merge remote-tracking branch 'origin/main' into nej
+[33mf5b166d[m 0718nej 주문완료 페이지 수정
+[33m74ae6b7[m 0718nej 주문완료 페이지 수정
+[33m086f2cb[m Merge pull request #21 from go-nu/hyo0
+[33m81b4a0b[m 0718 hyo0 mypage 쿠폰추가
+[33m2f362a4[m Merge branch 'main' into hyo0
+[33mf333fa4[m Merge branch 'main' into dk
+[33m63aef6d[m dk 브랜치에서 detail.html 수정사항 저장
+[33ma8b4ff9[m 0718 hyo0 product css 설정
+[33m42ca0f7[m Merge pull request #19 from go-nu/KGH
+[33m8904fd9[m 0718 hyo0 컴포넌트 내용 수정
+[33m2748892[m 0718 hyo0 공용 css 수정
+[33m6f5096b[m 0718 hyo0 user파트 임시 css 적용
+[33m0f53aa4[m KGH 0718 관리자상세창 js수정 및 detail창 정리
+[33m7129a23[m Merge branch 'main' into hyo0
+[33ma127b70[m Merge pull request #18 from go-nu/nej
+[33m2ca9193[m 0717nej 결제
+[33m734a77e[m Merge remote-tracking branch 'origin/main' into nej
+[33m4877d43[m nej
+[33ma8b1687[m Merge pull request #17 from go-nu/KGH
+[33m26abc91[m KGH 0717C 상품상세정보 + 리모콘 추가
+[33mdcb8359[m KGH 0717B 상품상세정보 + 리모콘
+[33m2de4f9a[m 0717kwCoupon
+[33m3b5b4ca[m 0717작업중
+[33m2bc42d9[m 0717 hyo0 header.js추가
+[33m2e52006[m 0717 hyo0 중앙집중형 css ver.2
+[33m535e43b[m 0717 hyo0 중앙집중형 css 베이스 작성
+[33me61de2a[m 0717kw로그인정보유지,js분류
+[33m5492e69[m Merge pull request #15 from go-nu/dk
+[33m2d594fe[m constant의 categoryselect삭제 상품등록, 상세보기 수정
+[33m83c74e4[m Merge branch 'main' into hyo0
+[33ma17967e[m 0717 hyo0 scroll js수정
+[33ma2a76f7[m 0717 hyo0 임시 css 파일
+[33mf93e2f5[m Merge remote-tracking branch 'origin/main'
+[33m762ab1a[m 0717 hyo0 js 스크롤 삭제
+[33m3f63b33[m 0717 hyo0 js 스크롤 삭제
+[33md61d6ff[m 0717 hyo0 html 헤더, 푸터 모듈화 css링크 제거
+[33m12814da[m Merge pull request #12 from go-nu/hyo0
+[33mdde242e[m 0717 hyo0 README.md 이름 변경
+[33maf6f3b0[m 0717 hyo0 css 삭제
+[33m1d3a99c[m Merge remote-tracking branch 'origin/main'
+[33md6e5832[m Merge pull request #11 from go-nu/KGH
+[33mcf4b851[m KGH 0716 인테리어게시판 디버깅
+[33m73b3dd9[m 0716 hyo0 css 용량 줄임
+[33ma649c18[m 0716kw장바구니및로그인유지수정
+[33mab1a3d0[m Merge branch 'main' of https://github.com/go-nu/WooriZIP
+[33m2f41d14[m Merge pull request #10 from go-nu/nej
+[33m123e8fc[m 0716nej 로그인 방법
+[33m40cf2f1[m Merge branch 'main' of https://github.com/go-nu/WooriZIP
+[33m72b36bb[m Merge pull request #9 from go-nu/KGH
+[33m920f34e[m KGH 0716 QNA게시판 수정
+[33mdb5ef81[m Merge branch 'main' of https://github.com/go-nu/WooriZIP
+[33mfb9c8c7[m 0715nej
+[33mf7cd1e9[m Merge pull request #8 from go-nu/hyo0
+[33mf6e55ab[m 0715 hyo0 THEME_GUIDE 추가
+[33m21305d2[m 0715kwSignUpCart
+[33m195a1dd[m Merge pull request #7 from go-nu/KGH
+[33mb00e943[m KGH 0715 관리자qna임시
+[33m508ca6f[m Merge pull request #6 from go-nu/nej
+[33m81a1c11[m 0715nej Order & signup Email
+[33mc3bcb7e[m 0715nej Order&signup Email
+[33m81fa897[m Merge pull request #5 from go-nu/dk
+[33m2adc374[m Merge branch 'main' into dk
+[33m2a1f3eb[m 2중 분류 -> 3중 분류 세분화 및 옵션 색상,소재 등 추가
+[33m0423c7f[m 0715 hyo0 css 모듈화 파일 추가
+[33m3f8efc0[m Remove secret
+[33m9c4b870[m ignore
+[33m2a08b8c[m Merge pull request #4 from go-nu/KGH
+[33mad75777[m KGH 0715a 리뷰+qna게시판
+[33m2c923c7[m KGH 0715 리뷰+qna 게시판
+[33me002215[m Merge pull request #1 from go-nu/hyo0
+[33mac35a72[m KGH 0715 리뷰+qna 게시판
+[33me81d7ca[m 0715 hyo0 헤더 스크롤 스크립트 제거
+[33mf74b577[m 0715 hyo0 fins -> find 파일명 변경
+[33m4adea11[m 0715 hyo0 css 경로수정
+[33m451ab72[m 0715 hyo0 개별 css 파일 제거
+[33m6263d08[m 0715 hyo0 edit 헤더 스크립트 변경
+[33m988ae05[m 0715 hyo0 사용하지 않는 파일 삭제
+[33m3326d89[m 0715 중앙 집중식 css방식으로 변경
+[33ma81d989[m 0715

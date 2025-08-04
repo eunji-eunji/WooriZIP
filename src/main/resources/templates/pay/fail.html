@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결제 실패</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: #fff;
+            color: #4A4947;
+            font-family: 'Arial', sans-serif;
+            padding-top: 70px !important;
+        }
+        main {
+            max-width: 1100px;
+            width: 100%;
+            margin: 60px auto 60px auto;
+            background-color: #FFF;
+            padding: 40px 40px 30px 40px;
+            box-sizing: border-box;
+        }
+        .result.wrapper {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .box_section {
+            background: #F9F7F0;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            padding: 32px;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        .box_section h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #B17457;
+            margin-bottom: 24px;
+        }
+        .box_section p {
+            font-size: 1.1rem;
+            color: #4A4947;
+            margin: 12px 0;
+        }
+        @media (max-width: 1200px) {
+            main {
+                padding: 24px 2vw 40px 2vw;
+            }
+        }
+        @media (max-width: 700px) {
+            main {
+                padding: 16px 2vw 32px 2vw;
+            }
+            .box_section h2 {
+                font-size: 1.5rem;
+            }
+            .box_section {
+                padding: 24px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{index/header :: header}"></div>
+
+<main>
+    <div class="result wrapper">
+        <div class="box_section">
+            <h2 style="padding: 20px 0px 10px 0px">
+                <img width="25px" src="https://static.toss.im/3d-emojis/u1F6A8-apng.png"/>
+                결제 실패
+            </h2>
+            <p id="code"></p>
+            <p id="message"></p>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{index/footer :: footer}"></div>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get("orderId");
+    const code = urlParams.get("code");
+    const message = urlParams.get("message");
+
+    document.getElementById("code").textContent = "에러코드: " + code;
+    document.getElementById("message").textContent = "실패 사유: " + message;
+
+    // 서버에 주문 취소 요청
+    if (orderId) {
+        fetch('/cancel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ orderId: orderId })
+        }).then(response => {
+            if (!response.ok) {
+                console.error('❗ 주문 취소 실패');
+            }
+        }).catch(error => {
+            console.error('❗ 주문 취소 중 에러 발생:', error);
+        });
+    }
+</script>
+</body>
+</html>

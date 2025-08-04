@@ -1,0 +1,62 @@
+<!-- 플로팅 챗봇 버튼 -->
+<div th:fragment="floating-chatbot">
+    <div class="floating-chatbot">
+        <a href="/chatbot" class="chatbot-btn" title="챗봇 열기">
+            <span class="chatbot-icon" aria-hidden="true">
+                <!-- Modern chat bubble + robot SVG icon -->
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <ellipse cx="14" cy="14" rx="12" ry="11" fill="#fff" stroke="#B17457" stroke-width="2"/>
+                  <rect x="7" y="10" width="14" height="8" rx="4" fill="#B17457"/>
+                  <ellipse cx="11" cy="14" rx="1.2" ry="1.2" fill="#fff"/>
+                  <ellipse cx="17" cy="14" rx="1.2" ry="1.2" fill="#fff"/>
+                  <rect x="12.5" y="17" width="3" height="1.2" rx="0.6" fill="#fff"/>
+                  <rect x="12.2" y="7.5" width="3.6" height="2" rx="1" fill="#B17457"/>
+                  <rect x="13.2" y="5.5" width="1.6" height="2" rx="0.8" fill="#B17457"/>
+                </svg>
+            </span>
+            <span class="chatbot-label">챗봇</span>
+        </a>
+    </div>
+    <style>
+        .floating-chatbot {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        .chatbot-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #B17457, #8B5A3C);
+            color: #fff;
+            border-radius: 50%;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(177, 116, 87, 0.25);
+            transition: all 0.2s cubic-bezier(.4,0,.2,1);
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            outline: none;
+        }
+        .chatbot-btn:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 8px 24px rgba(177, 116, 87, 0.35);
+            color: #fff;
+        }
+        .chatbot-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2px;
+        }
+        .chatbot-label {
+            font-size: 11px;
+            margin-top: 1px;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</div> 

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRAND</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #4A4947;
+            background-color: #fff;
+            padding-top: 70px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 60px;
+            color: #B17457;
+            font-size: 36px;
+            font-weight: 700;
+        }
+        
+        .brand-hero {
+            text-align: center;
+            margin-bottom: 80px;
+            padding: 60px 0;
+            background: linear-gradient(135deg, #F9F7F0 0%, #fff 100%);
+            border-radius: 15px;
+        }
+        
+        .brand-logo {
+            font-size: 60px;
+            font-family: "Stardos Stencil", system-ui;
+            font-weight: 700;
+            color: #B17457;
+            margin-bottom: 20px;
+        }
+        
+        .brand-tagline {
+            font-size: 20px;
+            color: #4A4947;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .brand-description {
+            font-size: 16px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        .brand-section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            color: #B17457;
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .brand-content {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+        
+        .brand-content h3 {
+            color: #B17457;
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .brand-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .value-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: #F9F7F0;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .value-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .value-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .value-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #B17457;
+            margin-bottom: 10px;
+        }
+        
+        .value-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #B17457;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            background: #B17457;
+            border-radius: 50%;
+        }
+        
+        .timeline-year {
+            font-weight: 700;
+            color: #B17457;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-content {
+            font-size: 16px;
+            color: #4A4947;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .brand-content {
+                padding: 25px;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .brand-logo {
+                font-size: 40px;
+            }
+            
+            .brand-tagline {
+                font-size: 18px;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div th:replace="~{index/header :: header}"></div>
+    
+    <main>
+        <div class="container">
+            <h1 class="page-title">BRAND</h1>
+            
+            <div class="brand-hero">
+                <div class="brand-logo">WooriZIP</div>
+                <div class="brand-tagline">우리의 공간을 더 아름답게</div>
+                <div class="brand-description">
+                    WooriZIP은 일상의 공간을 특별하게 만들어주는 인테리어 아이템을 제공하는 브랜드입니다. 
+                    우리의 삶이 이루어지는 공간, 그곳이 바로 우리의 이야기가 담긴 곳입니다.
+                </div>
+            </div>
+            
+            <div class="brand-section">
+                <h2 class="section-title">브랜드 스토리</h2>
+                <div class="brand-content">
+                    <h3>우리의 시작</h3>
+                    <p>
+                        WooriZIP은 2024년, 일상의 공간을 더 아름답고 편안하게 만들고자 하는 마음에서 시작되었습니다. 
+                        현대인들의 바쁜 일상 속에서도 자신만의 공간을 통해 위로와 힐링을 찾을 수 있도록, 
+                        세심하게 디자인된 인테리어 아이템들을 선보입니다.
+                    </p>
+                    <p>
+                        우리는 단순한 가구나 소품을 넘어서, 각자의 개성과 라이프스타일을 반영할 수 있는 
+                        다양한 옵션을 제공합니다. 고객 한 분 한 분의 니즈를 이해하고, 
+                        그들의 공간에 어울리는 최적의 솔루션을 제시하는 것이 우리의 목표입니다.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="brand-section">
+                <h2 class="section-title">브랜드 가치</h2>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <div class="value-icon">🏠</div>
+                        <div class="value-title">편안함</div>
+                        <div class="value-description">
+                            집은 쉬는 곳이자 힐링의 공간입니다. 
+                            우리는 편안함을 최우선으로 하는 제품을 제공합니다.
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🎨</div>
+                        <div class="value-title">아름다움</div>
+                        <div class="value-description">
+                            기능성과 아름다움의 조화를 추구합니다. 
+                            실용적이면서도 미적으로 완성도 높은 제품을 만듭니다.
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">♻️</div>
+                        <div class="value-title">지속가능성</div>
+                        <div class="value-description">
+                            환경을 생각하는 마음으로 친환경 소재와 
+                            지속가능한 제품을 개발합니다.
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">💝</div>
+                        <div class="value-title">고객중심</div>
+                        <div class="value-description">
+                            고객의 만족을 최우선으로 생각합니다. 
+                            끊임없는 소통과 피드백을 통해 더 나은 서비스를 제공합니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="brand-section">
+                <h2 class="section-title">브랜드 히스토리</h2>
+                <div class="brand-content">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2024년 1월</div>
+                            <div class="timeline-content">WooriZIP 브랜드 런칭 및 온라인 쇼핑몰 오픈</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2024년 3월</div>
+                            <div class="timeline-content">첫 번째 인테리어 컬렉션 'Spring Collection' 출시</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2024년 6월</div>
+                            <div class="timeline-content">고객 상담 챗봇 서비스 도입으로 24시간 상담 서비스 시작</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2024년 9월</div>
+                            <div class="timeline-content">커뮤니티 기능 추가로 고객 간 소통의 장 마련</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2024년 12월</div>
+                            <div class="timeline-content">연말 특별 컬렉션 'Winter Wonderland' 출시</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="brand-section">
+                <h2 class="section-title">미래 비전</h2>
+                <div class="brand-content">
+                    <h3>더 나은 내일을 위한 약속</h3>
+                    <p>
+                        WooriZIP은 앞으로도 고객 여러분의 일상에 특별한 가치를 더해나갈 것입니다. 
+                        새로운 트렌드를 반영한 혁신적인 제품 개발, 
+                        더욱 편리한 쇼핑 경험 제공, 그리고 환경 친화적인 비즈니스 모델 확립을 통해 
+                        지속가능한 성장을 이어나가겠습니다.
+                    </p>
+                    <p>
+                        우리는 단순한 쇼핑몰을 넘어서, 고객 여러분의 라이프스타일 파트너가 되고자 합니다. 
+                        함께 만들어가는 아름다운 공간, 그것이 바로 WooriZIP이 추구하는 미래입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 푸터 -->
+    <div th:replace="~{index/footer :: footer}"></div>
+    
+    <!-- 헤더 스크롤 스크립트 -->
+    <script>
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            } else {
+                header.style.backgroundColor = '#fff';
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 

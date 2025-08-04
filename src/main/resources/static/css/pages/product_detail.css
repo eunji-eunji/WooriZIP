@@ -1,0 +1,252 @@
+/* 전체 레이아웃 */
+.product-detail-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333;
+}
+
+/* 2단 구성 */
+.product-detail-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+/* 이미지 영역 */
+.product-image-area img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    background-color: #eee;
+    object-fit: cover;
+    max-height: 500px;
+}
+
+/* 상품명 */
+.product-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+/* 가격 */
+.product-price {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 24px;
+}
+
+/* 옵션 선택 */
+.product-options label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.product-options select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* 속성 드롭다운 */
+.attribute-select-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.attribute-select-group label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.attribute-select-group select {
+    margin-top: 4px;
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* 수량 입력 */
+.quantity-box {
+    margin-bottom: 20px;
+}
+
+.quantity-box label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.quantity-box input {
+    width: 80px;
+    padding: 8px;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* 버튼들 */
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.action-buttons button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-wish {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.btn-cart {
+    background-color: #666;
+    color: white;
+}
+
+.btn-buy {
+    background-color: #111;
+    color: white;
+}
+
+button:disabled,
+.btn-disabled {
+    background-color: #ccc !important;
+    color: #666 !important;
+    cursor: not-allowed !important;
+    opacity: 0.7;
+}
+
+.btn-wish:hover {
+    background-color: #ddd;
+}
+
+.btn-cart:hover {
+    background-color: #555;
+}
+
+.btn-buy:hover {
+    background-color: #000;
+}
+
+/* 결제 금액 요약 */
+.price-summary h5 {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #666;
+}
+
+.price-summary h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* 상세 설명 */
+.product-detail-section {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+/* 리뷰 / QnA 영역 */
+.review-qna-section {
+    margin-top: 80px;
+}
+
+.tab-menu .tab-button {
+    font-weight: 600;
+    font-size: 16px;
+    color: #555;
+}
+
+.tab-menu .tab-button.active {
+    color: #000;
+    border-bottom: 2px solid #000;
+}
+
+/* 목록으로 돌아가기 */
+.back-button-box {
+    margin: 60px 0 40px;
+    text-align: center;
+}
+
+.back-button-box button {
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.back-button-box button:hover {
+    background: #f9f9f9;
+}
+
+/* -------------------- */
+/* 반응형 레이아웃 */
+/* -------------------- */
+@media (max-width: 768px) {
+    .product-detail-wrapper {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .product-image-area img {
+        max-height: 360px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .attribute-select-group {
+        flex-direction: column;
+    }
+}
+
+/* 상품 평점 표시 스타일 */
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.product-rating .stars {
+    display: flex;
+    gap: 2px;
+}
+
+.product-rating .stars i {
+    font-size: 18px;
+}
+
+.product-rating .rating-text {
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+}
+
+.product-rating .text-muted {
+    font-size: 14px;
+}
