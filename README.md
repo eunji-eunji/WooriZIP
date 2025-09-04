@@ -1,17 +1,15 @@
-🏠 WooriZip - 인테리어 쇼핑 & 커뮤니티 플랫폼
+# 🏠 WooriZip - 인테리어 쇼핑 & 커뮤니티 플랫폼
 
-1. 프로젝트 소개
+## 1. 프로젝트 소개
 WooriZip은 Spring Boot 기반의 인테리어 제품 쇼핑몰 플랫폼입니다.
 쇼핑몰 기능뿐 아니라 커뮤니티, AI 챗봇, 추천 시스템을 통합하여 차별화된 e-commerce 경험을 제공합니다.
 
-· 개발 기간: 2025.06.29 – 2025.08.08
-
-· 역할: 백엔드 개발 (장바구니, 주문·결제, OAuth2 소셜 로그인)
-
-· 참여 인원: 5명 팀 프로젝트
+- **개발 기간**: 2025.06.29 – 2025.08.08  
+- **역할**: 백엔드 개발 (장바구니, 주문·결제, OAuth2 소셜 로그인)  
+- **참여 인원**: 5명 팀 프로젝트
 
 
-2. 주요 기능
+## 2. 주요 기능
 - 쇼핑몰: 상품 등록, 검색/필터, 장바구니, 결제
 - 커뮤니티: 리뷰, Q&A, 인테리어 게시글
 - 관리자: 수정, 삭제, 등록, 상품 판매 현황 확인
@@ -20,49 +18,57 @@ WooriZip은 Spring Boot 기반의 인테리어 제품 쇼핑몰 플랫폼입니�
 - 반응형 디자인: 모바일/데스크톱 최적화
 
 
-3. 본인 기여 상세
- 1) 장바구니 서비스 설계
+## 3. 본인 기여 상세
+ **장바구니 서비스 설계**
  - 상품 삭제 시 CartItem 일괄 제거 → 불필요한 쿼리 감소
  - Cart DTO 최적화 및 조회 성능 개선
- 2) 주문 & 결제 프로세스
+ **주문 & 결제 프로세스**
  - 상태 기반 주문 관리(생성→결제→배송)
  - 트랜잭션 처리 및 예외 처리(재고 부족, 결제 실패)
- 3) OAuth2 소셜 로그인
+ **OAuth2 소셜 로그인**
  - Google/Naver/Kakao 인증 토큰 연동
  - 신규 소셜 사용자 DB 자동 생성 및 권한 부여
 
 
-4. 기술 스택
-Backend
+## 4. 기술 스택
+**Backend**
  - Spring Boot 3.3, Java 17, Spring Security, JPA(Hibernate), MySQL 8.0, Gradle, OAuth2 Social Login
-Frontend
+**Frontend**
  - Thymeleaf, Vanilla JS, CSS(SMACSS), Google Fonts
-Infra
+**Infra**
  - Log4j2, GitHub
 
 
-5. 프로젝트 구조
+## 5. 프로젝트 구조
 WooriZip/
 ├── build.gradle
-├── src/
-│   ├── main/java/com/example/demo/
-│   │   ├── controller/     # MVC 컨트롤러
-│   │   ├── service/        # 서비스 계층
-│   │   ├── repository/     # 데이터 접근 계층
-│   │   ├── entity/         # JPA 엔티티
-│   │   └── WooriZipApplication.java
-│   └── resources/
-│       ├── static/         # 정적 파일(css, js, images)
-│       └── templates/      # Thymeleaf 템플릿
+└── src/
+    ├── main/java/com/example/demo/
+    │   ├── controller/     # MVC 컨트롤러
+    │   ├── service/        # 서비스 계층
+    │   ├── repository/     # 데이터 접근 계층
+    │   ├── entity/         # JPA 엔티티
+    │   └── WooriZipApplication.java
+    └── resources/
+        ├── static/         # 정적 파일(css, js, images)
+        └── templates/      # Thymeleaf 템플릿
 
 
-6. 실행 방법
+## 6. 실행 방법
+```bash
 # DB 준비
 CREATE DATABASE woorizip;
 
+# 프로젝트 실행
+./gradlew build
+./gradlew bootRun
+
+# 접속
+http://localhost
+```
 
 
-🔧 기능 상세
+## 🔧 기능 상세
 ### **1. 사용자 관리 시스템**
 - **다중 로그인**: 폼 기반 + OAuth2 소셜 로그인 (Google, Naver, Kakao)
 - **회원가입**: 이메일 인증, 비밀번호 암호화
@@ -108,5 +114,5 @@ CREATE DATABASE woorizip;
 
 
 
-라이선스
+## 라이선스
 이 프로젝트는 포토폴리오 목적으로 개발되었습니다.
