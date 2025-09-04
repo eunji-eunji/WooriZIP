@@ -8,6 +8,7 @@ WooriZip은 Spring Boot 기반의 인테리어 제품 쇼핑몰 플랫폼입니�
 - **역할**: 백엔드 개발 (장바구니, 주문·결제, OAuth2 소셜 로그인)  
 - **참여 인원**: 5명 팀 프로젝트
 
+---
 
 ## 2. 주요 기능
 - 쇼핑몰: 상품 등록, 검색/필터, 장바구니, 결제
@@ -17,29 +18,37 @@ WooriZip은 Spring Boot 기반의 인테리어 제품 쇼핑몰 플랫폼입니�
 - 개인화 추천: 구매/조회 이력 기반 스마트 추천
 - 반응형 디자인: 모바일/데스크톱 최적화
 
+---
 
 ## 3. 본인 기여 상세
  **장바구니 서비스 설계**
  - 상품 삭제 시 CartItem 일괄 제거 → 불필요한 쿼리 감소
  - Cart DTO 최적화 및 조회 성능 개선
+
  **주문 & 결제 프로세스**
  - 상태 기반 주문 관리(생성→결제→배송)
  - 트랜잭션 처리 및 예외 처리(재고 부족, 결제 실패)
+
  **OAuth2 소셜 로그인**
  - Google/Naver/Kakao 인증 토큰 연동
  - 신규 소셜 사용자 DB 자동 생성 및 권한 부여
 
+---
 
 ## 4. 기술 스택
 **Backend**
  - Spring Boot 3.3, Java 17, Spring Security, JPA(Hibernate), MySQL 8.0, Gradle, OAuth2 Social Login
+
 **Frontend**
  - Thymeleaf, Vanilla JS, CSS(SMACSS), Google Fonts
+
 **Infra**
  - Log4j2, GitHub
 
+---
 
 ## 5. 프로젝트 구조
+```
 WooriZip/
 ├── build.gradle
 └── src/
@@ -52,7 +61,9 @@ WooriZip/
     └── resources/
         ├── static/         # 정적 파일(css, js, images)
         └── templates/      # Thymeleaf 템플릿
+```
 
+---
 
 ## 6. 실행 방법
 ```bash
@@ -67,6 +78,7 @@ CREATE DATABASE woorizip;
 http://localhost
 ```
 
+---
 
 ## 🔧 기능 상세
 ### **1. 사용자 관리 시스템**
@@ -112,7 +124,7 @@ http://localhost
 - **쿠폰 관리**: 쿠폰 발급, 사용 현황 추적, 프로모션 설정
 - **게시물 관리**: 커뮤니티 게시글 및 댓글 관리, 스팸 필터링
 
-
+---
 
 ## 라이선스
 이 프로젝트는 포토폴리오 목적으로 개발되었습니다.
