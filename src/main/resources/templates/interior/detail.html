@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${dto.title}">게시글 상세</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: #fff;
+            color: #4A4947;
+            font-family: 'Arial', sans-serif;
+            padding-top: 70px !important;
+        }
+        main {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 32px 0 64px 0;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #B17457;
+            margin: 32px 0 24px 0;
+            text-align: center;
+        }
+        h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #B17457;
+            margin: 32px 0 16px 0;
+        }
+        h4 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4A4947;
+            margin: 24px 0 12px 0;
+        }
+        .interior-container {
+            width: 100%;
+        }
+        .interior-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .post-detail {
+            background: #fff;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+        .post-info {
+            background: #F9F7F0;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            border-left: 4px solid #B17457;
+        }
+        .post-info p {
+            margin: 8px 0;
+            font-size: 1rem;
+        }
+        .post-info strong {
+            color: #B17457;
+            font-weight: 600;
+        }
+        .post-content {
+            margin-bottom: 32px;
+        }
+        .post-content strong {
+            color: #B17457;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .post-content p {
+            line-height: 1.6;
+            font-size: 1rem;
+            color: #4A4947;
+        }
+        .image-gallery {
+            margin: 24px 0;
+        }
+        .image-preview {
+            width: 450px;
+            height: 300px;
+            object-fit: cover;
+            border: 1px solid #E0E0E0;
+            background: #F9F7F0;
+            margin: 8px 0;
+            border-radius: 0;
+        }
+        .like-btn {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin: 16px 0;
+        }
+        .like-btn:hover {
+            background: #4A4947;
+        }
+        .btn-box {
+            display: flex;
+            gap: 12px;
+            margin: 24px 0;
+            justify-content: center;
+        }
+        .btn-box button, .btn-box input[type="submit"] {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-box button:hover, .btn-box input[type="submit"]:hover {
+            background: #4A4947;
+        }
+        .btn-box form {
+            display: inline;
+        }
+        .comment-section {
+            background: #fff;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+        .comment-item {
+            border-bottom: 1px solid #E0E0E0;
+            padding: 16px 0;
+            margin-bottom: 16px;
+        }
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+        .comment-item p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        .comment-item strong {
+            color: #B17457;
+            font-weight: 600;
+        }
+        .comment-item small {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .comment-form {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #E0E0E0;
+        }
+        .comment-form h3 {
+            margin-bottom: 16px;
+        }
+        .comment-form p {
+            margin-bottom: 12px;
+            color: #666;
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: none;
+            min-height: 80px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .comment-form textarea:focus {
+            border: 1.5px solid #B17457;
+            background: #F9F7F0;
+        }
+        .comment-form button {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 8px;
+        }
+        .comment-form button:hover {
+            background: #4A4947;
+        }
+        .comment-form a {
+            color: #B17457;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .comment-form a:hover {
+            color: #4A4947;
+        }
+        .comment-actions {
+            margin-top: 8px;
+            display: flex;
+            gap: 8px;
+        }
+        .comment-edit-btn, .comment-delete-btn, .comment-submit-btn, .comment-cancel-btn {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .comment-edit-btn:hover, .comment-delete-btn:hover, .comment-submit-btn:hover {
+            background: #4A4947;
+        }
+        .comment-cancel-btn {
+            background: #888;
+        }
+        .comment-cancel-btn:hover {
+            background: #666;
+        }
+        .edit-form {
+            margin-top: 12px;
+            padding: 12px;
+            background: #F9F7F0;
+            border: 1px solid #E0E0E0;
+        }
+        .edit-form textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: none;
+            margin-bottom: 8px;
+        }
+        .edit-form-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        @media (max-width: 1200px) {
+            main {
+                padding: 24px 2vw 40px 2vw;
+            }
+        }
+        @media (max-width: 700px) {
+            main {
+                padding: 16px 2vw 32px 2vw;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .post-detail, .comment-section {
+                padding: 20px;
+            }
+            .btn-box {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn-box button, .btn-box input[type="submit"] {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+
+
+
+<script>
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    function showEditForm(commentId) {
+        const editForm = document.getElementById('editForm' + commentId);
+        if (editForm) {
+            editForm.style.display = 'block';
+        }
+    }
+
+    function hideEditForm(commentId) {
+        const editForm = document.getElementById('editForm' + commentId);
+        if (editForm) {
+            editForm.style.display = 'none';
+        }
+    }
+
+
+</script>
+
+<body>
+<div th:replace="~{index/header :: header}"></div>
+
+<main>
+    <div class="interior-container">
+        <div class="interior-header">
+            <h1 th:text="${dto.title}">게시글 제목</h1>
+        </div>
+
+        <div class="post-detail">
+            <div class="post-info">
+                <p><strong>작성자:</strong> <span th:text="${dto.nickname}"></span></p>
+                <p><strong>작성일:</strong> <span th:text="${#temporals.format(dto.createdAt, 'yyyy-MM-dd HH:mm')}"></span></p>
+                <p><strong>조회수:</strong> <span th:text="${dto.views}"></span></p>
+            </div>
+
+            <div class="post-content">
+                <strong>내용:</strong>
+                <p th:text="${dto.content}"></p>
+            </div>
+
+            <div class="image-gallery">
+                <h4>첨부 이미지</h4>
+                <div th:if="${dto.filePathList != null}">
+                    <img th:each="img : ${dto.filePathList}"
+                         th:if="${!#strings.isEmpty(img)}"
+                         th:src="@{${img}}"
+                         alt="첨부 이미지"
+                         class="image-preview"
+                         style="width: 450px !important; height: 300px !important; object-fit: cover !important;"/>
+                </div>
+                <div th:if="${dto.filePathList == null or dto.filePathList.isEmpty()}">
+                    <p>첨부 이미지 없음</p>
+                </div>
+            </div>
+
+            <div>
+                <button id="likeBtn" class="like-btn" th:data-post-id="${dto.postId}">
+                    ❤️ 좋아요 (<span id="likeCount" th:text="${dto.liked}">0</span>)
+                </button>
+            </div>
+
+            <div class="btn-box" th:if="${loginUser != null and (dto.email == loginUser.email or loginUser.role.name() == 'ADMIN')}">
+                <button type="button" th:if="${dto.email == loginUser.email}" th:onclick="|location.href='@{/interior/edit/{id}(id=${dto.postId})}'|">수정</button>
+                <form th:action="@{'/interior/delete/' + ${dto.postId}}" method="post"
+                      onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display:inline;">
+                    <button type="submit" th:text="${loginUser.role.name() == 'ADMIN' ? '관리자 삭제' : '삭제'}">삭제</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="comment-section">
+            <h3>댓글</h3>
+            <div th:if="${commentList != null}">
+                <div th:each="comment : ${commentList}" class="comment-item">
+                    <p><strong th:text="${comment.nickname}">작성자</strong></p>
+                    <p><span th:text="${comment.content}">내용</span></p>
+                    <p><small th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</small></p>
+
+                    <div th:if="${loginUser != null and (comment.email == loginUser.email or loginUser.role.name() == 'ADMIN')}">
+                        <div class="comment-actions">
+                            <!-- 일반 사용자만 수정 버튼 표시 -->
+                            <button type="button" class="comment-edit-btn" th:if="${comment.email == loginUser.email}" th:onclick="|showEditForm(${comment.commentId})|">댓글 수정</button>
+                            <form th:action="@{'/interior/' + ${dto.postId} + '/comment/delete/' + ${comment.commentId}}"
+                                  method="post" style="display: inline;">
+                                <button type="submit" class="comment-delete-btn" th:text="${loginUser.role.name() == 'ADMIN' ? '관리자 댓글 삭제' : '댓글 삭제'}"
+                                        onclick="return confirm('댓글을 삭제하시겠습니까?');">댓글 삭제</button>
+                            </form>
+                        </div>
+                        <form th:if="${comment.email == loginUser.email}" th:action="@{'/interior/' + ${dto.postId} + '/comment/edit/' + ${comment.commentId}}"
+                              method="post" class="edit-form" th:id="|editForm${comment.commentId}|" style="display: none;">
+                            <textarea name="content" rows="2" th:text="${comment.content}"></textarea>
+                            <div class="edit-form-buttons">
+                                <button type="submit" class="comment-submit-btn">수정 완료</button>
+                                <button type="button" class="comment-cancel-btn" th:onclick="|hideEditForm(${comment.commentId})|">취소</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-form" th:if="${loginUser != null}">
+                <h3>댓글 작성</h3>
+                <p>작성자: <span th:text="${loginUser.nickname}"></span></p>
+
+                <form th:action="@{'/interior/' + ${dto.postId} + '/comment'}" method="post">
+                    <textarea name="content" rows="3" required></textarea>
+                    <button type="submit">댓글 등록</button>
+                </form>
+            </div>
+            <div th:unless="${loginUser != null}">
+                <p>댓글을 작성하려면 <a th:href="@{/user/login}" style="text-decoration: none; color: #B17457; font-weight: 600; padding: 6px 16px; border: 1px solid #B17457; border-radius: 4px; background-color: transparent; transition: all 0.2s;" onmouseover="this.style.backgroundColor='#B17457'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#B17457';">로그인</a>이 필요합니다.</p>
+            </div>
+        </div>
+
+        <div class="btn-box">
+            <button type="button" onclick="location.href='/interior'">목록으로</button>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{index/footer :: footer}"></div>
+<div th:replace="~{index/floating-chatbot :: floating-chatbot}"></div>
+<script src="/js/interior/detail.js"></script>
+</body>
+</html>

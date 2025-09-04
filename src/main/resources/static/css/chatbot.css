@@ -1,0 +1,306 @@
+/* 챗봇 컨테이너 */
+.chatbot-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    background: var(--color-white);
+    min-height: 100vh;
+    font-family: var(--font-body);
+}
+
+/* 챗봇 헤더 */
+.chatbot-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-brand-dark) 100%);
+    color: white;
+    border-radius: 15px;
+    box-shadow: var(--shadow-lg);
+}
+
+.chatbot-header h2 {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.chatbot-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 16px;
+}
+
+/* 채팅 메시지 영역 */
+.chat-messages {
+    background: var(--color-white);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    box-shadow: var(--shadow-md);
+}
+
+/* 메시지 스타일 */
+.message {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bot-message {
+    align-items: flex-start;
+}
+
+.user-message {
+    align-items: flex-end;
+}
+
+.message-content {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.bot-message .message-content {
+    background: var(--color-cream-light);
+    color: var(--text-default);
+    border-bottom-left-radius: 5px;
+    border-left: 3px solid var(--color-brand);
+}
+
+.user-message .message-content {
+    background: var(--color-brand);
+    color: white;
+    border-bottom-right-radius: 5px;
+}
+
+.message-time {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 5px;
+    padding: 0 5px;
+}
+
+/* 제안사항 버튼 */
+.suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.suggestion-btn {
+    background: var(--color-white);
+    border: 2px solid var(--color-brand);
+    color: var(--color-brand);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: var(--transition-normal);
+    white-space: nowrap;
+}
+
+.suggestion-btn:hover {
+    background: var(--color-brand);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* 뒤로가기 버튼 스타일 */
+.suggestion-btn.back-btn {
+    background: #f8f9fa;
+    border-color: #dee2e6;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.suggestion-btn.back-btn:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+    color: #495057;
+    transform: translateY(-1px);
+}
+
+/* 입력 영역 */
+.chat-input-container {
+    display: flex;
+    gap: 10px;
+    background: var(--color-white);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-md);
+}
+
+#messageInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    border-radius: 25px;
+    background: var(--color-cream);
+    font-size: 14px;
+    transition: var(--transition-normal);
+}
+
+#messageInput:focus {
+    background: var(--color-white);
+    box-shadow: 0 0 0 2px var(--color-brand);
+}
+
+.send-btn {
+    background: var(--color-brand);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition-normal);
+}
+
+.send-btn:hover {
+    background: var(--color-brand-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* 상품 카드 스타일 */
+.product-card {
+    background: var(--color-white);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--color-brand);
+}
+
+.product-card h4 {
+    margin: 0 0 8px 0;
+    color: var(--text-default);
+    font-size: 16px;
+}
+
+.product-card p {
+    margin: 5px 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.product-card .price {
+    font-weight: bold;
+    color: var(--color-brand);
+    font-size: 16px;
+}
+
+.product-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: var(--color-brand);
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 13px;
+    transition: var(--transition-normal);
+}
+
+.product-link:hover {
+    background: var(--color-brand-dark);
+    transform: translateY(-2px);
+}
+
+/* 링크 스타일 */
+.chat-link {
+    display: inline-block !important;
+    margin-top: 10px !important;
+    padding: 10px 20px !important;
+    background: var(--color-brand) !important;
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    transition: var(--transition-normal) !important;
+    border: 2px solid var(--color-brand) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    cursor: pointer !important;
+}
+
+.chat-link:hover {
+    background: var(--color-brand-dark) !important;
+    border-color: var(--color-brand-dark) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* 로딩 애니메이션 */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 12px 16px;
+    background: var(--color-cream-light);
+    border-radius: 18px;
+    border-bottom-left-radius: 5px;
+    max-width: 70%;
+    border-left: 3px solid var(--color-brand);
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-brand);
+    border-radius: 50%;
+    animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typing {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .chatbot-container {
+        padding: 10px;
+    }
+    
+    .chatbot-header {
+        padding: 15px;
+    }
+    
+    .chatbot-header h2 {
+        font-size: 20px;
+    }
+    
+    .suggestions {
+        justify-content: center;
+    }
+    
+    .suggestion-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    
+    .message-content {
+        max-width: 85%;
+    }
+} 

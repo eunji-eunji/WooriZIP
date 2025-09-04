@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>상품 수정</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #fff;
+            color: #4A4947;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            width: 100%;
+            padding-top: 70px !important;
+        }
+        main {
+            max-width: 1100px;
+            width: 100%;
+            margin: 60px auto 60px auto;
+            background-color: #FFF;
+            border: 1px solid #FFF;
+            border-radius: 0;
+            padding: 40px 40px 30px 40px;
+            box-sizing: border-box;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #B17457;
+            margin-bottom: 32px;
+            letter-spacing: -1px;
+        }
+        label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #4A4947;
+            font-weight: 500;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 1rem;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            background: #F9F7F0;
+            color: #4A4947;
+            margin-bottom: 18px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            border: 1.5px solid #B17457;
+            background: #fff;
+        }
+        .image-container {
+            display: inline-block;
+            position: relative;
+            margin: 0 8px 8px 0;
+        }
+        .image-preview {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border: 1px solid #E0E0E0;
+            background: #F9F7F0;
+            border-radius: 0;
+        }
+        .remove-btn {
+            position: absolute !important;
+            top: 8px !important;
+            right: 8px !important;
+            background: #dc3545 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 50% !important;
+            width: 25px !important;
+            height: 25px !important;
+            cursor: pointer !important;
+            font-size: 14px !important;
+            line-height: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: background-color 0.2s !important;
+            padding: 0 !important;
+            margin: 5px !important;
+        }
+        .remove-btn:hover {
+            background: #c82333 !important;
+        }
+        .product-form {
+            width: 100%;
+        }
+        .product-form label {
+            margin-bottom: 4px;
+        }
+        #generateOptionsBtn {
+            background: #B17457;
+            color: #fff;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 10px 15px 10px 0;
+            min-width: 160px;
+        }
+
+        #generateOptionsBtn:hover {
+            background: #8d5a41;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(177, 116, 87, 0.2);
+        }
+
+        #addManualOptionBtn {
+            background: #F9F7F0;
+            color: #4A4947;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 10px 15px 10px 0;
+            min-width: 160px;
+        }
+
+        #addManualOptionBtn:hover {
+            background: #e8e6df;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(249, 247, 240, 0.3);
+        }
+
+        .product-form input[type="file"] {
+            margin-bottom: 18px;
+        }
+        .product-form button[type="button"], .product-form button[type="submit"] {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 12px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 18px;
+            margin-right: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .product-form button[type="button"]:hover, .product-form button[type="submit"]:hover {
+            background: #4A4947;
+        }
+        #optionTable {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            margin-top: 18px !important;
+            background: #fff !important;
+            font-size: 1rem !important;
+        }
+        #optionTable th, #optionTable td {
+            border: 1px solid #E0E0E0 !important;
+            padding: 10px 8px !important;
+            text-align: center !important;
+        }
+        #optionTable th {
+            background: #F9F7F0 !important;
+            color: #B17457 !important;
+            font-weight: 600 !important;
+        }
+        #optionTable td button {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 6px 16px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #optionTable td button:hover {
+            background: #4A4947;
+        }
+        .product-form > div {
+            margin-bottom: 12px;
+        }
+        .product-form input[type="checkbox"] {
+            margin-right: 6px;
+            accent-color: #B17457;
+        }
+        .product-form label + label {
+            margin-top: 12px;
+        }
+        @media (max-width: 1200px) {
+            main {
+                max-width: 98vw;
+                padding: 24px 8px;
+            }
+        }
+        @media (max-width: 700px) {
+            main {
+                padding: 12px 2vw;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            .image-preview {
+                width: 80px; height: 80px;
+            }
+        }
+    </style>
+</head>
+
+<script>
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+</script>
+
+<body class="product-edit-page">
+<div th:replace="~{index/header :: header}"></div>
+
+<main>
+    <h2>상품 수정</h2>
+
+    <form class="product-form" id="editForm" th:action="@{'/admin/products/' + ${productForm.id} + '/update'}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:value="${productForm.id}"/>
+        <input type="hidden" name="deleteIndexes" id="deleteIndexes"/>
+        <!-- 카테고리 자동 선택용 hidden 값 -->
+        <input type="hidden" id="currentCategoryId" th:value="${productForm.category?.id}"/>
+        <input type="hidden" id="currentMiddleId" th:value="${productForm.category?.parent?.id}"/>
+        <input type="hidden" id="currentParentId" th:value="${productForm.category?.parent?.parent?.id}"/>
+
+        <label>상품명:
+            <input type="text" name="name" th:value="${productForm.name}" required/>
+        </label><br/>
+
+        <label>가격:
+            <input type="number" name="price" th:value="${productForm.price}" required/>
+        </label><br/>
+
+        <label>카테고리:
+            <!-- 계층형 카테고리 드롭다운으로 대체 -->
+        </label><br/>
+
+        <!-- 대분류 선택 -->
+        <label>대분류:
+            <select id="parentCategory" onchange="loadMiddleCategories()">
+                <option value="">대분류 선택</option>
+            </select>
+        </label><br/>
+
+        <!-- 중분류 선택 -->
+        <label>중분류:
+            <select id="middleCategory" onchange="loadChildCategories()">
+                <option value="">중분류 선택</option>
+            </select>
+        </label><br/>
+
+        <!-- 소분류 선택 (실제 categoryId가 이 값으로 들어감) -->
+        <label>소분류:
+            <select id="childCategory" name="categoryId" required>
+                <option value="">소분류 선택</option>
+            </select>
+        </label><br/>
+
+        <!-- 기존 이미지 미리보기 + 삭제 버튼 -->
+        <label>기존 이미지:</label><br/>
+        <div id="existingImages" th:if="${productForm.imageUrls != null}">
+            <div th:each="url, iterStat : ${productForm.imageUrls}" class="image-container"
+                 th:data-index="${iterStat.index}">
+                <img th:src="${url}" class="image-preview"/>
+                <button type="button" class="remove-btn" onclick="removeExistingImage(this)">✕</button>
+            </div>
+        </div>
+
+        <!-- 새 이미지 업로드 + 미리보기 -->
+        <label>새 이미지 업로드:</label><br/>
+        <input type="file" id="imageInput" multiple accept="image/*"/>
+        <div id="previewArea"></div>
+        <br/>
+
+        <!-- 옵션 속성 체크박스 (상품 등록과 동일) -->
+        <div>
+            <label>색상:</label>
+            <span th:each="val : ${attributeValues}">
+        <span th:if="${val.attributeName} == '색상'">
+          <input type="checkbox" name="color" th:value="${val.id}" th:attr="data-label=${val.value}"
+                 th:text="${val.value}"/>
+        </span>
+      </span>
+        </div>
+        <div>
+            <label>사이즈:</label>
+            <span th:each="val : ${attributeValues}">
+        <span th:if="${val.attributeName} == '사이즈'">
+          <input type="checkbox" name="size" th:value="${val.id}" th:attr="data-label=${val.value}"
+                 th:text="${val.value}"/>
+        </span>
+      </span>
+        </div>
+        <div>
+            <label>소재:</label>
+            <span th:each="val : ${attributeValues}">
+        <span th:if="${val.attributeName} == '소재'">
+          <input type="checkbox" name="material" th:value="${val.id}" th:attr="data-label=${val.value}"
+                 th:text="${val.value}"/>
+        </span>
+      </span>
+        </div>
+        <button type="button" id="generateOptionsBtn">모든 조합 생성</button>
+
+        <!-- 조합별 옵션 입력 테이블 (상품 등록과 동일) -->
+        <table id="optionTable" border="1" style="margin-top:10px; display:none;">
+            <thead>
+            <tr>
+                <th>옵션명</th>
+                <th>가격</th>
+                <th>재고</th>
+                <th>삭제</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- 기존 옵션 입력 UI는 숨김 처리 -->
+        <div id="optionContainer" style="display:none;"></div>
+        <button type="button" onclick="addOption()" style="display:none;">옵션 추가</button>
+
+        <button type="submit">상품 수정</button>
+    </form>
+</main>
+
+<script th:inline="javascript">
+    window.attributeValues = [[${attributeValues}]];
+    window.productModels = [[${productForm.productModelDtoList}]];
+</script>
+<script src="/js/product/update.js" defer></script>
+
+<div th:replace="~{index/footer :: footer}"></div>
+</body>
+</html>

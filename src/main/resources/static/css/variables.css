@@ -1,0 +1,127 @@
+/* variables.css - 정리된 변수 시스템 */
+
+:root {
+  /* === Brand Colors === */
+  --color-brand: #B17457;
+  --color-brand-light: #C48A6F;
+  --color-brand-dark: #9A6347;
+
+  /* === Neutral Colors === */
+  --color-cream: #F9F7F0;
+  --color-cream-light: #FDFCF8;
+  --color-cream-dark: #F0EDE0;
+  --color-white: #FFFFFF;
+  --color-gray: #F8F9FA;
+  --color-dark: #2C2C2C;
+
+  /* === Secondary Palette === */
+  --color-gold: #D4AF37;
+  --color-sage: #9CAF88;
+  --color-navy: #2C3E50;
+  --color-beige: #D8D2C2;
+
+  /* === Social Colors === */
+  --color-google: #3791db;
+  --color-naver: #03C75A;
+  --color-kakao: #FEE500;
+
+  /* === Text Colors === */
+  --text-default: #2C2C2C;
+  --text-secondary: #5A5A5A;
+  --text-light: #8A8A8A;
+  --text-muted: #B0B0B0;
+
+  /* === State Colors === */
+  --color-success: #10B981;
+  --color-success-light: #D1FAE5;
+  --color-error: #EF4444;
+  --color-error-light: #FEE2E2;
+  --color-warning: #F59E0B;
+  --color-warning-light: #FEF3C7;
+  --color-info: #3B82F6;
+  --color-info-light: #DBEAFE;
+
+  /* === Border Colors === */
+  --border-light: #E5E7EB;
+  --border-medium: #D1D5DB;
+  --border-dark: #9CA3AF;
+  --border-focus: #B17457;
+
+  /* === Typography === */
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-logo: 'Stardos Stencil', system-ui;
+  --font-kr: 'Noto Sans KR', sans-serif;
+
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+  --font-size-4xl: 36px;
+  --font-size-5xl: 48px;
+  --font-size-6xl: 60px;
+
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* === Line Heights === */
+  --line-none: 1;
+  --line-tight: 1.25;
+  --line-snug: 1.375;
+  --line-normal: 1.5;
+  --line-relaxed: 1.625;
+  --line-loose: 2;
+
+  /* === Spacing Scale === */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* === Radius === */
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* === Shadows === */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+
+  /* === Transitions === */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+  --transition-slower: 500ms ease;
+
+  /* === Z-index === */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}

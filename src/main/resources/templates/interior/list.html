@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>방꾸미기 게시판</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: #fff;
+            color: #4A4947;
+            font-family: 'Arial', sans-serif;
+            padding-top: 70px !important;
+        }
+        main {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 32px 0 64px 0;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #B17457;
+            margin: 32px 0 24px 0;
+            text-align: center;
+        }
+        .interior-container {
+            width: 100%;
+        }
+        .interior-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .write-btn, .notice-btn {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 7px 18px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            transform: scale(0.95);
+        }
+        .write-btn:hover, .notice-btn:hover {
+            background: #4A4947;
+        }
+        .notice-btn {
+            background: #4A4947;
+        }
+        .notice-btn:hover {
+            background: #B17457;
+        }
+        .board-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .post-card {
+            background: #fff;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            padding: 24px;
+            transition: border 0.2s;
+            position: relative;
+        }
+        .post-card:hover {
+            border: 1px solid #B17457;
+        }
+        .notice-card {
+            background: #F9F7F0;
+            border: 1px solid #B17457;
+        }
+        .post-header {
+            margin-bottom: 12px;
+        }
+        .category-tag {
+            background: #B17457;
+            color: #fff;
+            padding: 4px 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 0;
+        }
+        .notice-badge {
+            background: #4A4947;
+        }
+        .post-title {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4A4947;
+            text-decoration: none;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .post-title:hover {
+            color: #B17457;
+        }
+        .post-content {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .post-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.9rem;
+            color: #888;
+            flex-wrap: wrap;
+        }
+        .post-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .like-info {
+            color: #B17457;
+            font-weight: 500;
+        }
+        .post-thumbnail {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border: 1px solid #E0E0E0;
+            background: #F9F7F0;
+            margin-top: 12px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 40px;
+        }
+        .pagination a, .pagination span {
+            padding: 8px 12px;
+            border: 1px solid #E0E0E0;
+            background: #fff;
+            color: #4A4947;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+        .pagination a:hover {
+            background: #B17457;
+            color: #fff;
+            border-color: #B17457;
+        }
+        .pagination .active {
+            background: #B17457;
+            color: #fff;
+            border-color: #B17457;
+        }
+        .pagination span:not(.active) {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        /* 검색 폼 스타일 */
+        .search-container {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .search-form {
+            width: 100%;
+            max-width: 400px;
+        }
+        .search-input-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .search-select {
+            padding: 8px 10px;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            background: #fff;
+            color: #4A4947;
+            font-size: 0.9rem;
+            min-width: 80px;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            font-size: 0.9rem;
+            color: #4A4947;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #B17457;
+        }
+        .search-btn {
+            padding: 8px 16px;
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .search-btn:hover {
+            background: #4A4947;
+        }
+        
+        @media (max-width: 1200px) {
+            main {
+                padding: 24px 2vw 40px 2vw;
+            }
+        }
+        @media (max-width: 700px) {
+            main {
+                padding: 16px 2vw 32px 2vw;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .post-card {
+                padding: 16px;
+            }
+            .post-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            .write-btn, .notice-btn {
+                width: 140px;
+            }
+            .search-input-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .search-select, .search-input, .search-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<script>
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+</script>
+
+<body>
+<div th:replace="~{index/header :: header}"></div>
+
+<main>
+    <div class="interior-container">
+        <div class="interior-header">
+            <h1>방꾸미기 게시판</h1>
+        </div>
+
+        <!-- 글쓰기 버튼 -->
+        <div class="button-group">
+            <button type="button"
+                    class="write-btn"
+                    th:if="${loginUser != null}"
+                    th:onclick="'location.href=\'/interior/write\''">
+                게시글 작성하기
+            </button>
+
+            <!-- 관리자용 공지사항 작성 버튼 -->
+            <button type="button"
+                    class="notice-btn"
+                    th:if="${loginUser != null and loginUser.role.name() == 'ADMIN'}"
+                    onclick="writeNotice()">
+                공지사항 작성하기
+            </button>
+        </div>
+
+        <!-- 검색 폼 -->
+        <div class="search-container">
+            <form th:action="@{/interior}" method="get" class="search-form">
+                <input type="hidden" name="page" value="1">
+                <div class="search-input-group">
+                    <select name="searchType" class="search-select">
+                        <option value="all" th:selected="${searchType == 'all' or searchType == ''}">전체</option>
+                        <option value="title" th:selected="${searchType == 'title'}">제목</option>
+                        <option value="author" th:selected="${searchType == 'author'}">작성자</option>
+                    </select>
+                    <input type="text" 
+                           name="keyword" 
+                           th:value="${keyword}"
+                           placeholder="검색어를 입력하세요" 
+                           class="search-input">
+                    <button type="submit" class="search-btn">검색</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="board-list">
+            <!-- 공지사항 -->
+            <a th:each="post : ${postPage.content}" th:if="${post.notice}" th:href="@{|/interior/${post.postId}|}" class="post-card-link" style="text-decoration: none; color: inherit; display: block;">
+                <div class="post-card notice-card">
+                    <div class="post-header">
+                        <span class="category-tag notice-badge">공지</span>
+                    </div>
+                    <span class="post-title" th:text="${post.title}">제목</span>
+                    <div class="post-meta">
+                        <span><span th:text="${post.nickname}">작성자</span></span>
+                        <span>조회 <span th:text="${post.views}">0</span></span>
+                        <span class="like-info">🤍 <span th:text="${post.liked}">0</span></span>
+                        <span><span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">날짜</span></span>
+                    </div>
+                </div>
+            </a>
+            <!-- 일반 게시글 -->
+            <a th:each="post : ${postPage.content}" th:unless="${post.notice}" th:href="@{|/interior/${post.postId}|}" class="post-card-link" style="text-decoration: none; color: inherit; display: block;">
+                <div class="post-card">
+                    <div class="post-header">
+                        <span class="category-tag">인테리어</span>
+                    </div>
+                    <span class="post-title" th:text="${post.title}">제목</span>
+                    <div class="post-content" th:text="${#strings.abbreviate(post.content, 100)}">내용 미리보기...</div>
+                    <div class="post-meta">
+                        <span><span th:text="${post.nickname}">작성자</span></span>
+                        <span>조회 <span th:text="${post.views}">0</span></span>
+                        <span class="like-info">🤍 <span th:text="${post.liked}">0</span></span>
+                        <span><span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">날짜</span></span>
+                    </div>
+                    <!-- 썸네일 이미지 (첨부 이미지가 있는 경우) -->
+                    <img th:if="${post.filePathList != null and !post.filePathList.isEmpty()}"
+                         th:src="@{${post.filePathList[0]}}"
+                         class="post-thumbnail"
+                         alt="썸네일">
+                </div>
+            </a>
+            <!-- 게시글이 없을 때 -->
+            <div th:if="${postPage.content.empty}" class="post-card">
+                <div class="post-content" style="text-align: center; color: #888;">
+                    <div th:if="${keyword != null and keyword != ''}">
+                        <p>"<span th:text="${keyword}"></span>"에 대한 검색 결과가 없습니다.</p>
+                        <p>다른 검색어를 입력해보세요.</p>
+                    </div>
+                    <div th:unless="${keyword != null and keyword != ''}">
+                        게시글이 없습니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            .post-card-link { text-decoration: none; color: inherit; display: block; }
+            .post-card-link:visited { color: inherit; }
+        </style>
+
+        <!-- 페이지네이션 -->
+        <div class="pagination" th:with="total=${totalPages > 0 ? totalPages : 1}">
+            <span th:if="${currentPage > 1}">
+                <a th:href="@{/interior(page=${currentPage - 1}, searchType=${searchType}, keyword=${keyword})}">이전</a>
+            </span>
+            <span th:if="${currentPage == 1}">
+                <span>이전</span>
+            </span>
+
+            <span th:each="i : ${#numbers.sequence(1, total)}">
+                <a th:href="@{/interior(page=${i}, searchType=${searchType}, keyword=${keyword})}"
+                   th:text="${i}"
+                   th:classappend="${i == currentPage} ? 'active' : ''">
+                </a>
+            </span>
+
+            <span th:if="${currentPage < total}">
+                <a th:href="@{/interior(page=${currentPage + 1}, searchType=${searchType}, keyword=${keyword})}">다음</a>
+            </span>
+            <span th:if="${currentPage == total}">
+                <span>다음</span>
+            </span>
+        </div>
+    </div>
+</main>
+
+<!-- 플로팅 챗봇 버튼 추가 -->
+<div th:replace="~{index/floating-chatbot :: floating-chatbot}"></div>
+
+<div th:replace="~{index/footer :: footer}"></div>
+
+<script>
+    function writeNotice() {
+        // 공지사항 작성 페이지로 이동하면서 공지사항 플래그 전달
+        location.href = '/interior/write?isNotice=true';
+    }
+    
+    // 검색 폼 제출 시 검색어가 없으면 전체 목록으로 이동
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchForm = document.querySelector('.search-form');
+        const searchInput = document.querySelector('.search-input');
+        
+        searchForm.addEventListener('submit', function(e) {
+            if (searchInput.value.trim() === '') {
+                e.preventDefault();
+                // 검색어가 없으면 전체 목록으로 이동
+                window.location.href = '/interior';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
+    

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이메일 무단수집거부</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.8;
+            color: #4A4947;
+            background-color: #fff;
+            padding-top: 70px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #B17457;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        .policy-content {
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .policy-section {
+            margin-bottom: 30px;
+        }
+        
+        .policy-section h3 {
+            color: #B17457;
+            font-size: 20px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .policy-section p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+        
+        .policy-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .policy-section li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            background-color: #F9F7F0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #B17457;
+        }
+        
+        .warning-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .warning-box p {
+            color: #856404;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .policy-content {
+                padding: 20px;
+            }
+            
+            .page-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div th:replace="~{index/header :: header}"></div>
+    
+    <main>
+        <div class="container">
+            <h1 class="page-title">이메일 무단수집거부</h1>
+            
+            <div class="policy-content">
+                <div class="policy-section">
+                    <h3>이메일 주소 무단수집 거부</h3>
+                    <p>
+                        본 웹사이트에 게시된 이메일 주소가 전자우편주소 수집 프로그램이나<br>
+                        그 밖의 기술적 장치를 이용하여 무단으로 수집되는 것을 거부하며,<br>
+                        이를 위반 시 정보통신망 이용촉진 및 정보보호 등에 관한 법률에 의해<br>
+                        형사처벌됨을 유념하시기 바랍니다.
+                    </p>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>⚠️ 주의사항</h4>
+                    <p>• 이메일 주소를 무단으로 수집하는 행위는 불법입니다.</p>
+                    <p>• 수집된 이메일 주소로 광고성 정보를 전송하는 것도 금지되어 있습니다.</p>
+                    <p>• 위반 시 최대 3년 이하의 징역 또는 3천만원 이하의 벌금이 부과될 수 있습니다.</p>
+                </div>
+                
+                <div class="policy-section">
+                    <h3>관련 법령</h3>
+                    <div class="highlight">
+                        <strong>정보통신망 이용촉진 및 정보보호 등에 관한 법률</strong><br>
+                        제50조의2 (전자우편주소의 무단수집행위 등 금지)
+                    </div>
+                    <ul>
+                        <li>누구든지 전자우편주소의 수집을 거부하는 의사가 명시된 인터넷 홈페이지에서 자동으로 전자우편주소를 수집하는 프로그램이나 그 밖의 기술적 장치를 이용하여 전자우편주소를 수집하여서는 아니 된다.</li>
+                        <li>누구든지 제1항을 위반하여 수집된 전자우편주소를 판매·유통하여서는 아니 된다.</li>
+                        <li>누구든지 제1항과 제2항에 따라 수집·판매·유통이 금지된 전자우편주소임을 알면서 이를 정보전송에 이용하여서는 아니 된다.</li>
+                    </ul>
+                </div>
+                
+                <div class="policy-section">
+                    <h3>WooriZIP의 이메일 정책</h3>
+                    <p>
+                        WooriZIP은 고객의 개인정보 보호를 최우선으로 생각하며,<br>
+                        다음과 같은 이메일 정책을 준수합니다:
+                    </p>
+                    <ul>
+                        <li>고객의 명시적인 동의 없이는 이메일 주소를 수집하지 않습니다.</li>
+                        <li>회원가입, 주문, 문의 등 고객이 직접 입력한 경우에만 이메일 주소를 수집합니다.</li>
+                        <li>수집된 이메일 주소는 주문 확인, 배송 안내, 고객 문의 응답 등 서비스 제공 목적으로만 사용됩니다.</li>
+                        <li>마케팅 목적의 이메일 발송은 고객의 사전 동의를 받은 경우에만 진행합니다.</li>
+                        <li>고객이 언제든지 이메일 수신을 거부할 수 있도록 구독 해지 기능을 제공합니다.</li>
+                    </ul>
+                </div>
+                
+                <div class="policy-section">
+                    <h3>이메일 수신 거부 방법</h3>
+                    <p>
+                        마케팅 이메일 수신을 원하지 않으시는 경우,<br>
+                        다음 방법으로 수신을 거부할 수 있습니다:
+                    </p>
+                    <ul>
+                        <li>이메일 하단의 '수신거부' 링크 클릭</li>
+                        <li>마이페이지 > 개인정보 설정에서 수신 동의 해제</li>
+                        <li>고객센터(1234-5678)로 전화 문의</li>
+                        <li>이메일(cs@woorizip.com)로 문의</li>
+                    </ul>
+                </div>
+                
+                <div class="policy-section">
+                    <h3>문의 및 신고</h3>
+                    <p>
+                        이메일 무단수집과 관련된 문의나 신고가 있으시면<br>
+                        언제든지 연락해 주시기 바랍니다.
+                    </p>
+                    <div class="highlight">
+                        <strong>연락처</strong><br>
+                        전화: 1234-5678<br>
+                        이메일: privacy@woorizip.com<br>
+                        주소: 서울 구로구 디지털로 306 WooriZIP 빌딩 5층
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 푸터 -->
+    <div th:replace="~{index/footer :: footer}"></div>
+    
+    <!-- 헤더 스크롤 스크립트 -->
+    <script>
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            } else {
+                header.style.backgroundColor = '#fff';
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 

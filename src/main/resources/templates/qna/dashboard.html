@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>QnA 관리 대시보드</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --color-bg: #FFFFFF;
+          --color-text: #4A4947;
+          --color-point-bg: #F9F7F0;
+          --color-point: #B17457;
+        }
+        body {
+          background: #fff;
+          color: #4A4947;
+          margin: 0;
+          font-family: 'Arial', sans-serif;
+          width: 100%;
+          padding-top: 70px !important;
+        }
+        .admin-container {
+          max-width: 1100px;
+          width: 100%;
+          margin: 0 auto;
+          padding: 32px 0 80px 0;
+          box-sizing: border-box;
+          background: var(--color-bg);
+        }
+        .page-title {
+          color: var(--color-point);
+          font-size: 2rem;
+          font-weight: bold;
+          margin-bottom: 32px;
+          color: #B17457;
+        }
+        .filter-section {
+          background: var(--color-point-bg);
+          border-radius: 10px;
+          padding: 20px 24px;
+          margin-bottom: 32px;
+          border: 1px solid #eee;
+          display: flex;
+          align-items: center;
+          gap: 18px;
+          flex-wrap: wrap;
+        }
+        .filter-label {
+          font-size: 1rem;
+          font-weight: 500;
+          color: var(--color-text);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .filter-btn-row {
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+        .filter-btn-row input[type="radio"] {
+          display: none;
+        }
+        .filter-btn-row label {
+          background: #fff;
+          color: var(--color-text);
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          padding: 10px 18px;
+          font-size: 0.97rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+          opacity: 0.7;
+        }
+        .filter-btn-row label:hover {
+          background: var(--color-point-bg);
+          color: var(--color-point);
+          border-color: var(--color-point);
+          opacity: 1;
+        }
+        .filter-btn-row input[type="radio"]:checked + label {
+          background: var(--color-point);
+          color: #fff;
+          border-color: var(--color-point);
+          opacity: 1;
+        }
+        .qna-card-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+          width: 100%;
+          min-height: 200px;
+        }
+        .qna-card-grid > div {
+          min-width: 0;
+        }
+        .qna-card {
+          transition: transform 0.2s, box-shadow 0.2s;
+          border: 1px solid #eee;
+          border-radius: 10px;
+          background: #fff;
+          min-height: 260px;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+        }
+        .qna-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(180,116,87,0.08);
+        }
+        .qna-status {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          z-index: 2;
+        }
+        .badge {
+          display: inline-block;
+          font-size: 0.95rem;
+          padding: 6px 12px;
+          border-radius: 12px;
+          font-weight: bold;
+          vertical-align: middle;
+        }
+        .badge-success {
+          background: var(--color-point);
+          color: #fff;
+        }
+        .badge-danger {
+          background: #fff0f0;
+          color: #e57373;
+          border: 1px solid #e57373;
+        }
+        .bg-success {
+          background: var(--color-point) !important;
+          color: #fff !important;
+        }
+        .bg-danger {
+          background: #fff0f0 !important;
+          color: #e57373 !important;
+          border: 1px solid #e57373 !important;
+        }
+        .qna-card-body {
+          padding: 1.5rem;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+        .qna-title {
+          font-size: 1.1rem;
+          font-weight: bold;
+          color: var(--color-point);
+          margin-bottom: 10px;
+        }
+        .qna-meta {
+          font-size: 0.97rem;
+          color: #888;
+          margin-bottom: 10px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        .qna-actions {
+          margin-top: auto;
+          display: flex;
+          gap: 10px;
+        }
+        .btn {
+          border-radius: 6px;
+          font-weight: 500;
+          font-size: 0.97rem;
+          padding: 8px 18px;
+          border: 1px solid var(--color-point);
+          background: #fff;
+          color: var(--color-point);
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s;
+          text-decoration: none;
+          display: inline-block;
+          text-align: center;
+        }
+        .btn:hover {
+          background: var(--color-point);
+          color: #fff;
+        }
+        .btn-view {
+          border: 1px solid var(--color-point);
+          color: var(--color-point);
+        }
+        .btn-view:hover {
+          background: var(--color-point);
+          color: #fff;
+        }
+        .btn-answer {
+          border: 1px solid #e57373;
+          color: #e57373;
+        }
+        .btn-answer:hover {
+          background: #e57373;
+          color: #fff;
+        }
+        .btn-answered {
+          border: 1px solid #aaa;
+          color: #aaa;
+        }
+        .btn-answered:hover {
+          background: #aaa;
+          color: #fff;
+        }
+        .btn-outline-danger {
+          border: 1px solid #e57373;
+          color: #e57373;
+        }
+        .btn-outline-danger:hover {
+          background: #e57373;
+          color: #fff;
+        }
+        .empty-state {
+          text-align: center;
+          padding: 60px 20px;
+          color: var(--color-text);
+          opacity: 0.7;
+        }
+        .empty-state i {
+          font-size: 4rem;
+          display: block;
+          margin-bottom: 16px;
+        }
+        .empty-title {
+          margin: 16px 0 20px 0;
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+        /* 아이콘 대체 (이모지) */
+        .icon-funnel::before { content: "⏳"; }
+        .icon-person::before { content: "👤"; }
+        .icon-clock::before { content: "⏰"; }
+        .icon-box::before { content: "📦"; }
+        .icon-question::before { content: "❓"; }
+        @media (max-width: 900px) {
+          .admin-container {
+            max-width: 98vw;
+            padding: 12px 2vw;
+          }
+          .qna-card-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+          .filter-section {
+            flex-direction: column;
+            gap: 10px;
+          }
+        }
+    </style>
+</head>
+
+<script>
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+</script>
+
+<body>
+<div th:replace="~{index/header :: header}"></div>
+<div class="admin-container">
+    <h2 class="page-title">QnA 관리 대시보드</h2>
+    <!-- 필터 섹션 -->
+    <div class="filter-section mb-4">
+        <label class="form-label mb-0 me-3"><i class="bi bi-funnel"></i> 문의 상태 필터:</label>
+        <div class="filter-btn-row" role="group" aria-label="QnA 상태 필터">
+            <input type="radio" class="btn-check" name="qnaFilter" id="filterAll" value="all" checked>
+            <label class="btn btn-outline-primary" for="filterAll">전체</label>
+            <input type="radio" class="btn-check" name="qnaFilter" id="filterAnswered" value="answered">
+            <label class="btn btn-outline-success" for="filterAnswered">답변완료</label>
+            <input type="radio" class="btn-check" name="qnaFilter" id="filterUnanswered" value="unanswered">
+            <label class="btn btn-outline-danger" for="filterUnanswered">미답변</label>
+        </div>
+    </div>
+    <!-- 카드 섹션 -->
+    <div class="qna-card-grid" id="qnaCardGrid">
+        <div th:each="qna : ${qnaList}">
+            <div class="qna-card position-relative h-100">
+                <div class="qna-card-body d-flex flex-column justify-content-between h-100">
+                    <div class="qna-status">
+                        <span th:if="${qna.answered}" class="badge badge-success">답변완료</span>
+                        <span th:unless="${qna.answered}" class="badge badge-danger">미답변</span>
+                        <span th:if="${qna.isSecret}" class="badge badge-warning" style="background: #ffc107; color: #000; margin-left: 5px;">비밀글</span>
+                    </div>
+                    <div class="qna-title" th:text="${qna.title}">QnA 제목</div>
+                    <div class="qna-meta mt-2">
+                        <span><i class="bi bi-person"></i> <span th:text="${qna.nickname}">작성자</span></span>
+                        <span class="ms-2"><i class="bi bi-clock"></i> <span th:text="${#temporals.format(qna.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</span></span>
+                        <span class="ms-2"><i class="bi bi-box"></i> <span th:text="${qna.productName}">상품명</span></span>
+                    </div>
+                    <div class="qna-actions d-flex gap-2">
+                        <a th:if="${!qna.answered and qna.productName != '삭제된 상품'}" th:href="@{'/products/' + ${qna.productId} + '#qna-tab'}" class="btn btn-outline-success btn-sm">답변하기</a>
+                        <a th:if="${!qna.answered and qna.productName == '삭제된 상품'}" class="btn btn-outline-secondary btn-sm disabled" style="cursor: not-allowed;">답변불가</a>
+                        <a th:if="${qna.answered and qna.productName != '삭제된 상품'}" th:href="@{'/products/' + ${qna.productId} + '#qna-tab'}" class="btn btn-outline-secondary btn-sm">답변보기</a>
+                        <a th:if="${qna.answered and qna.productName == '삭제된 상품'}" class="btn btn-outline-secondary btn-sm disabled" style="cursor: not-allowed;">답변보기</a>
+                        <form th:if="${qna.answered and qna.answer != null}" th:action="@{'/qna/answer/admin/delete/' + ${qna.answer.id}}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('답변을 삭제하시겠습니까?')">답변삭제</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(qnaList)}" class="text-center py-5">
+            <i class="bi bi-question-circle text-muted" style="font-size: 4rem;"></i>
+            <h5 class="text-muted mt-3">등록된 QnA가 없습니다</h5>
+        </div>
+    </div>
+</div>
+<div th:replace="~{index/footer :: footer}"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // 필터 버튼 동작
+    $(function() {
+        $('input[name="qnaFilter"]').on('change', function() {
+            var filter = $(this).val();
+            $('#qnaCardGrid > div').each(function() {
+                var answered = $(this).find('.badge').hasClass('badge-success');
+                if (filter === 'all') {
+                    $(this).show();
+                } else if (filter === 'answered' && answered) {
+                    $(this).show();
+                } else if (filter === 'unanswered' && !answered) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html> 

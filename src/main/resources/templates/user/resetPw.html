@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀번호 재설정</title>
+    <link rel="stylesheet" href="/css/pages/user.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<script>
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+</script>
+
+<body>
+<div th:replace="~{index/header :: header}"></div>
+
+<main>
+    <h2>비밀번호 재설정</h2>
+
+    <!-- 에러 메시지 표시 -->
+    <div th:if="${error}" th:text="${error}" class="error"></div>
+
+    <form id="resetPwForm" th:action="@{/user/resetPw}" method="post">
+        <input type="hidden" name="token" th:value="${token}"/>
+        <label for="newPw">새 비밀번호</label>
+        <input type="password" name="newPw" id="newPw" required><br/>
+        <label for="confirmPw">비밀번호 확인</label>
+        <input type="password" name="confirmPw" id="confirmPw" required><br/>
+        <div id="pwCheckResult"></div>
+        <button type="submit">비밀번호 변경</button>
+    </form>
+</main>
+
+<div th:replace="~{index/footer :: footer}"></div>
+<script src="/js/user/resetPw.js"></script>
+</body>
+</html>

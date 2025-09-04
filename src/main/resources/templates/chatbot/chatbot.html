@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>우리집 챗봇</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: #fff;
+            color: #4A4947;
+            font-family: 'Arial', sans-serif;
+            padding-top: 70px !important;
+        }
+        /* 이모티콘 폰트 설정 */
+        .message-content {
+            font-family: 'Arial', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+        }
+        main {
+            max-width: 1100px;
+            width: 100%;
+            margin: 60px auto 60px auto;
+            background-color: #FFF;
+            padding: 40px 40px 30px 40px;
+            box-sizing: border-box;
+        }
+        .chatbot-container {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .chatbot-header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding: 24px;
+            background: #F9F7F0;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+        }
+        .chatbot-header h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #B17457;
+            margin: 0 0 8px 0;
+        }
+        .chatbot-header p {
+            font-size: 1rem;
+            color: #666;
+            margin: 0;
+        }
+        .chat-messages {
+            background: #fff;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        .message {
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+        .bot-message {
+            align-items: flex-start;
+        }
+        .user-message {
+            align-items: flex-end;
+        }
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 0;
+            font-size: 1rem;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        .bot-message .message-content {
+            background: #F9F7F0;
+            color: #4A4947;
+            border: 1px solid #E0E0E0;
+        }
+        .user-message .message-content {
+            background: #B17457;
+            color: #fff;
+        }
+        .message-time {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 4px;
+            padding: 0 4px;
+        }
+        .bot-message .message-time {
+            text-align: left;
+        }
+        .user-message .message-time {
+            text-align: right;
+        }
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .suggestion-btn {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .suggestion-btn:hover {
+            background: #4A4947;
+        }
+        .chat-input-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        #messageInput {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border 0.2s;
+            background: #fff;
+            color: #4A4947;
+        }
+        #messageInput:focus {
+            border: 1.5px solid #B17457;
+            background: #F9F7F0;
+        }
+        #messageInput::placeholder {
+            color: #888;
+        }
+        .send-btn {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .send-btn:hover {
+            background: #4A4947;
+        }
+        .chat-link {
+            display: inline-block !important;
+            margin-top: 10px !important;
+            padding: 10px 20px !important;
+            background: #B17457 !important;
+            color: white !important;
+            text-decoration: none !important;
+            border-radius: 8px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            transition: all 0.2s !important;
+            border: 2px solid #B17457 !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+            cursor: pointer !important;
+        }
+        .chat-link:hover {
+            background: #4A4947 !important;
+            border-color: #4A4947 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+        @media (max-width: 1200px) {
+            main {
+                padding: 24px 2vw 40px 2vw;
+            }
+        }
+        @media (max-width: 700px) {
+            main {
+                padding: 16px 2vw 32px 2vw;
+            }
+            .chatbot-header h2 {
+                font-size: 1.5rem;
+            }
+            .chat-messages {
+                height: 300px;
+                padding: 16px;
+            }
+            .message-content {
+                max-width: 85%;
+                font-size: 0.95rem;
+            }
+            .suggestions {
+                flex-direction: column;
+            }
+            .suggestion-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .chat-input-container {
+                flex-direction: column;
+            }
+            .send-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{index/header :: header}"></div>
+
+<main>
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h2>💬 우리집 챗봇 상담</h2>
+            <p>무엇을 도와드릴까요?</p>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    안녕하세요! 우리집 쇼핑몰 챗봇입니다. 무엇을 도와드릴까요?
+                </div>
+                <div class="message-time" id="currentTime"></div>
+            </div>
+        </div>
+
+        <div class="suggestions" id="suggestions">
+            <button class="suggestion-btn" onclick="sendMessage('자주하는질문')">자주하는질문</button>
+            <button class="suggestion-btn" onclick="sendMessage('카테고리 보여줘')">카테고리 보여줘</button>
+            <button class="suggestion-btn" onclick="sendMessage('배송 안내 알려줘')">배송 안내 알려줘</button>
+            <button class="suggestion-btn" onclick="sendMessage('반품 정책 알려줘')">반품 정책 알려줘</button>
+            <button class="suggestion-btn" onclick="sendMessage('결제 방법 알려줘')">결제 방법 알려줘</button>
+            <button class="suggestion-btn" onclick="sendMessage('이벤트 정보 알려줘')">이벤트 정보 알려줘</button>
+        </div>
+
+        <div class="chat-input-container">
+            <input type="text" id="messageInput" placeholder="메시지를 입력하세요..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()" class="send-btn">전송</button>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{index/footer :: footer}"></div>
+<script th:src="@{/js/chatbot.js}"></script>
+</body>
+</html> 

@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>상품 상세</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-bg: #FFFFFF;
+            --brand-text: #4A4947;
+            --brand-point-bg: #F9F7F0;
+            --brand-point: #B17457;
+        }
+        body {
+            background: var(--brand-bg);
+            color: var(--brand-text);
+            font-family: 'Noto Sans KR', sans-serif;
+            padding-top: 70px !important;
+        }
+        main {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 16px 80px 16px;
+            box-sizing: border-box;
+        }
+        .product-detail-main {
+            display: flex;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+        .product-detail-images {
+            flex: 1.2;
+            background: var(--brand-point-bg);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 320px;
+        }
+        .main-image-box {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1/1;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        .main-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        .main-image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 1.2rem;
+        }
+        .product-detail-info {
+            flex: 1.8;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            justify-content: flex-start;
+        }
+        .product-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .product-price {
+            font-size: 1.5rem;
+            color: var(--brand-point);
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+        .product-options select, .product-options input[type=number] {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+        .product-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+        .product-actions button {
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 4px;
+            background: var(--brand-point);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .product-actions button:hover {
+            background: #8d5a41;
+        }
+        .product-nav-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .product-nav-links button {
+            background: #eee;
+            color: #333;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 18px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .product-nav-links button:hover {
+            background: var(--brand-point);
+            color: #fff;
+        }
+        .product-detail-section, .tab-section-placeholder {
+            margin-top: 48px;
+        }
+        .tab-menu {
+            border-bottom: 2px solid #eee;
+            margin-top: 48px;
+        }
+        .tab-button.active {
+            color: var(--brand-point);
+            border-bottom: 2px solid var(--brand-point);
+        }
+        @media (max-width: 900px) {
+            main {
+                padding: 16px 2vw 40px 2vw;
+            }
+            .product-detail-main {
+                flex-direction: column;
+                gap: 24px;
+            }
+            .product-detail-images {
+                min-width: 0;
+                width: 100%;
+            }
+            .main-image-box {
+                max-width: 100%;
+            }
+        }
+        button:disabled,
+        .btn-disabled {
+            background-color: #ccc !important;
+            color: #666 !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+        }
+
+        .tab-content-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-top: 8px;
+        }
+
+        /* Review 섹션 스타일 */
+        #review-section .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: box-shadow 0.2s;
+            padding-bottom: 20px !important;
+            padding-top: 8px !important;
+        }
+
+        #review-section .card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        #review-section .card-body {
+            padding: 12px;
+        }
+
+        #review-section .card-title {
+            color: var(--brand-text);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        #review-section .card-text {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        #review-section .btn {
+            background: transparent;
+            color: var(--brand-point);
+            border: 2px solid var(--brand-point);
+            border-radius: 6px;
+            padding: 6px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 0;
+            text-decoration: none;
+        }
+
+        #review-section .btn:hover, #review-section .btn.active {
+            background: var(--brand-point);
+            color: #fff;
+        }
+
+        #review-section .btn-primary {
+            background: transparent;
+            color: var(--brand-point);
+            border-color: var(--brand-point);
+        }
+
+        #review-section .btn-primary:hover {
+            background: var(--brand-point);
+            color: #fff;
+        }
+
+        #review-section .btn-success {
+            background: transparent;
+            color: #28a745;
+            border-color: #28a745;
+        }
+
+        #review-section .btn-success:hover {
+            background: #28a745;
+            color: #fff;
+        }
+
+        #review-section .btn-outline-secondary {
+            color: #6c757d;
+            border-color: #6c757d;
+            background: transparent;
+        }
+
+        #review-section .btn-outline-secondary:hover {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        #review-section .btn-outline-danger {
+            color: #dc3545;
+            border-color: #dc3545;
+            background: transparent;
+        }
+
+        #review-section .btn-outline-danger:hover {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        #review-section .btn-outline-primary {
+            margin-right: 8px !important;
+        }
+
+        #review-section .form-control {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        #review-section .form-control:focus {
+            border-color: var(--brand-point);
+            box-shadow: 0 0 0 0.2rem rgba(177, 116, 87, 0.25);
+        }
+
+        #review-section .progress {
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        #review-section .progress-bar {
+            background: var(--brand-point);
+            border-radius: 10px;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            color: white !important;
+            font-weight: bold !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+            min-width: 30px !important;
+            position: relative !important;
+        }
+
+        #review-section .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 40px;
+        }
+
+        #review-section .pagination a, #review-section .pagination span {
+            padding: 8px 12px;
+            border: 1px solid #E0E0E0;
+            background: #fff;
+            color: #4A4947;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        #review-section .pagination .page-item {
+            list-style: none;
+        }
+        #review-section .pagination a:hover {
+            background: var(--brand-point);
+            color: #fff;
+            border-color: var(--brand-point);
+        }
+
+        #review-section .pagination .active {
+            background: var(--brand-point);
+            color: #fff;
+            border-color: var(--brand-point);
+        }
+
+        #review-section .pagination span:not(.active) {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            color: #666;
+            font-weight: bold;
+            padding: 16px 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        #qna-section .border.rounded {
+             border: 1px solid #e0e0e0 !important;
+             border-radius: 8px !important;
+             padding: 12px !important;
+             margin-bottom: 32px !important;
+             background: #fff;
+             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+             transition: box-shadow 0.2s;
+             padding-bottom: 20px !important;
+        }
+
+        #qna-section .border.rounded:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        #qna-section .btn {
+             background: transparent;
+             color: var(--brand-point);
+             border: 2px solid var(--brand-point);
+             border-radius: 6px;
+             padding: 6px 16px;
+             font-size: 0.9rem;
+             font-weight: 600;
+             cursor: pointer;
+             transition: all 0.2s;
+             margin-bottom: 0;
+             text-decoration: none;
+        }
+
+        #qna-section .btn:hover, #qna-section .btn.active {
+            background: var(--brand-point);
+            color: #fff;
+        }
+
+        #qna-section .btn-primary {
+            background: transparent;
+            color: var(--brand-point);
+            border-color: var(--brand-point);
+        }
+
+        #qna-section .btn-primary:hover {
+            background: var(--brand-point);
+            color: #fff;
+        }
+
+        #qna-section .btn-success {
+            background: transparent;
+            color: #28a745;
+            border-color: #28a745;
+        }
+
+        #qna-section .btn-success:hover {
+            background: #28a745;
+            color: #fff;
+        }
+
+        #qna-section .btn-outline-primary {
+            color: var(--brand-point);
+            border-color: var(--brand-point);
+            background: transparent;
+            margin-right: 8px !important;
+            padding: 6px 16px !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            border-radius: 6px !important;
+            transition: all 0.2s !important;
+            border: 2px solid var(--brand-point) !important;
+        }
+
+        #qna-section .btn-outline-primary:hover {
+            background: var(--brand-point);
+            color: #fff;
+        }
+
+        #qna-section .btn-outline-primary.active {
+            background: var(--brand-point) !important;
+            color: #fff !important;
+        }
+
+        #qna-section .btn-outline-danger {
+            color: #dc3545;
+            border-color: #dc3545;
+            background: transparent;
+            padding: 6px 16px !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            border-radius: 6px !important;
+            transition: all 0.2s !important;
+            border: 2px solid #dc3545 !important;
+            margin-right: 8px !important;
+        }
+
+        #qna-section .btn-outline-danger:hover {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        #qna-section .btn-outline-danger.active {
+            background: transparent !important;
+            color: #dc3545 !important;
+        }
+
+        #qna-section .btn-outline-success {
+            color: #28a745;
+            border-color: #28a745;
+            background: transparent;
+            margin-right: 8px !important;
+            padding: 6px 16px !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            border-radius: 6px !important;
+            transition: all 0.2s !important;
+            border: 2px solid #28a745 !important;
+            background: #28a745 !important;
+            color: #fff !important;
+        }
+
+        #qna-section .btn-outline-success:hover {
+            background: #28a745;
+            color: #fff;
+        }
+
+        #qna-section .btn-outline-success.active {
+            background: transparent !important;
+            color: #28a745 !important;
+        }
+
+        #qna-section .form-control {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        #qna-section .form-control:focus {
+            border-color: var(--brand-point);
+            box-shadow: 0 0 0 0.2rem rgba(177, 116, 87, 0.25);
+        }
+
+        #qna-section .badge {
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+
+        #qna-section .badge.bg-warning {
+            background: #ffc107 !important;
+            color: #212529;
+        }
+
+        #qna-section .badge.bg-success {
+            background: #28a745 !important;
+            color: #fff;
+        }
+
+                 #qna-section .alert {
+             border-radius: 6px;
+             border: none;
+             padding: 16px;
+             margin-bottom: 16px !important;
+         }
+
+        #qna-section .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+
+        #qna-section .border-top {
+            border-top: 1px solid #e0e0e0 !important;
+            padding-top: 16px;
+            margin-top: 16px;
+        }
+
+        /* QnA Q&A 라벨 스타일링 */
+        #qna-section .badge.bg-primary {
+            background: #007bff !important;
+            color: #fff;
+        }
+
+        #qna-section .badge.bg-info {
+            background: #17a2b8 !important;
+            color: #fff;
+        }
+
+        #qna-section .text-primary {
+            color: #007bff !important;
+        }
+
+        #qna-section .text-success {
+            color: #28a745 !important;
+        }
+
+        #qna-section .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 40px;
+        }
+
+        #qna-section .pagination a, #qna-section .pagination span {
+            padding: 8px 12px;
+            border: 1px solid #E0E0E0;
+            background: #fff;
+            color: #4A4947;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        #qna-section .pagination .page-item {
+            list-style: none;
+        }
+
+        #qna-section .pagination a:hover {
+            background: var(--brand-point);
+            color: #fff;
+            border-color: var(--brand-point);
+        }
+
+        #qna-section .pagination .active {
+            background: var(--brand-point);
+            color: #fff;
+            border-color: var(--brand-point);
+        }
+
+        #qna-section .pagination span:not(.active) {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .text-primary {
+            color: var(--brand-point) !important;
+        }
+
+        .text-success {
+            color: #28a745 !important;
+        }
+
+        .text-muted {
+            color: #6c757d !important;
+        }
+
+        .fw-bold {
+            font-weight: 600 !important;
+        }
+
+        .mb-1 {
+            margin-bottom: 0.5rem !important;
+        }
+        .mb-2 {
+            margin-bottom: 1rem !important;
+        }
+        .mb-3 {
+            margin-bottom: 1.5rem !important;
+        }
+        .mb-4 {
+            margin-bottom: 2rem !important;
+        }
+
+        .mt-2 {
+            margin-top: 1rem !important;
+        }
+        .mt-3 {
+            margin-top: 1.5rem !important;
+        }
+        .mt-4 {
+            margin-top: 2rem !important;
+        }
+        .mt-5 {
+            margin-top: 3rem !important;
+        }
+
+        .me-1 {
+            margin-right: 0.25rem !important;
+        }
+        .me-2 {
+            margin-right: 0.5rem !important;
+        }
+
+        .d-flex {
+            display: flex !important;
+        }
+
+        .justify-content-between {
+            justify-content: space-between !important;
+        }
+
+        .justify-content-end {
+            justify-content: flex-end !important;
+        }
+
+        .justify-content-center {
+            justify-content: center !important;
+        }
+
+        .align-items-center {
+            align-items: center !important;
+        }
+
+        .d-none {
+            display: none !important;
+        }
+
+        .d-block {
+            display: block !important;
+        }
+
+        .d-inline-block {
+            display: inline-block !important;
+        }
+
+        .position-relative {
+            position: relative !important;
+        }
+
+        .position-absolute {
+            position: absolute !important;
+        }
+
+        .top-0 {
+            top: 0 !important;
+        }
+
+        .end-0 {
+            right: 0 !important;
+        }
+
+        .rounded-circle {
+            border-radius: 50% !important;
+        }
+
+        .img-thumbnail {
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+        }
+
+        .flex-wrap {
+            flex-wrap: wrap !important;
+        }
+
+        .gap-2 {
+            gap: 0.5rem !important;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+         .btn-group .btn {
+             background: transparent;
+             color: var(--brand-point);
+             border: 2px solid var(--brand-point);
+             border-radius: 6px !important;
+             padding: 12px 32px;
+             font-size: 1.1rem;
+             font-weight: 600;
+             cursor: pointer;
+             transition: all 0.2s;
+             margin-bottom: 0;
+             text-decoration: none;
+         }
+
+         .btn-group .btn:hover, .btn-group .btn.active {
+             background: var(--brand-point);
+             color: #fff;
+         }
+
+         .btn-group .btn:first-child {
+             border-top-right-radius: 0 !important;
+             border-bottom-right-radius: 0 !important;
+         }
+
+         .btn-group .btn:last-child {
+             border-top-left-radius: 0 !important;
+             border-bottom-left-radius: 0 !important;
+         }
+
+         .btn-group .btn:not(:first-child):not(:last-child) {
+             border-radius: 0 !important;
+         }
+
+         .remove-btn, .delete-existing-image {
+             background: #dc3545 !important;
+             color: #fff !important;
+             border: none !important;
+             border-radius: 50% !important;
+             width: 25px !important;
+             height: 25px !important;
+             padding: 0 !important;
+             line-height: 1 !important;
+             font-size: 14px !important;
+             font-weight: bold !important;
+             cursor: pointer !important;
+             position: absolute !important;
+             top: 5px !important;
+             right: 5px !important;
+             display: flex !important;
+             align-items: center !important;
+             justify-content: center !important;
+             z-index: 10 !important;
+             transition: all 0.2s !important;
+         }
+
+         .remove-btn:hover, .delete-existing-image:hover {
+             background: #c82333 !important;
+             transform: scale(1.1) !important;
+         }
+
+         .image-container {
+             position: relative !important;
+             display: inline-block !important;
+         }
+
+         @media (max-width: 768px) {
+            .tab-content-section {
+                padding: 20px;
+            }
+
+            #review-section .card-body,
+            #qna-section .border.rounded {
+                padding: 16px !important;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .btn-group .btn {
+                border-radius: 6px !important;
+            }
+        }
+    </style>
+</head>
+
+
+<body class="product-detail-page">
+<div th:replace="~{index/header :: header}"></div>
+<main>
+    <div class="product-detail-main">
+        <!-- 좌측: 이미지 영역 -->
+        <div class="product-detail-images">
+            <div class="main-image-box"
+                 style="aspect-ratio: 1/1; background: #f0f0f0; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: center;">
+                <img th:if="${product.images != null && #lists.size(product.images) > 0}"
+                     th:src="${product.images[0].imageUrl}" alt="상품 이미지"
+                     style="width: 100%; height: 100%; object-fit: cover; display: block;"/>
+                <div th:if="${product.images == null || #lists.size(product.images) == 0}"
+                     class="main-image-placeholder">
+                    상품 이미지
+                </div>
+            </div>
+            <!-- 썸네일 이미지 리스트 -->
+            <div th:if="${product.images != null && #lists.size(product.images) > 0}">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                    <img th:each="img : ${product.images}"
+                         th:src="${img.imageUrl}"
+                         alt="상품 이미지"
+                         width="80" height="80"
+                         style="border:1px solid #ccc; border-radius:8px; object-fit: cover; aspect-ratio: 1/1; background: #fff;"/>
+                </div>
+            </div>
+        </div>
+        <!-- 우측: 상품 정보 영역 -->
+        <div class="product-detail-info" style="gap: 10px;">
+            <div class="product-title" th:text="${product.name}" style="margin-bottom: 4px;">상품 이름</div>
+            <!-- 카테고리 표시: 대분류 > 소분류 -->
+            <div class="product-category"
+                 th:text="${product.categoryDisplay}"
+                 style="color: #888; font-size: 0.9rem; margin-bottom: 8px;">
+                대분류 > 중분류
+            </div>
+            <!-- 평균 평점 표시 -->
+            <div class="product-rating mb-2" th:if="${product.averageRating > 0}" style="margin-bottom: 4px;">
+            <span class="stars">
+                <span th:each="i : ${#numbers.sequence(1, 5)}"
+                      th:text="${i <= product.averageRating} ? '★' : '☆'"
+                      style="color: #ffc107; font-size: 1.2rem;"></span>
+            </span>
+                <span class="rating-text" th:text="${#numbers.formatDecimal(product.averageRating, 1, 1)}">4.5</span>
+                <span style="color: #666;">평균 평점</span>
+            </div>
+            <div class="product-rating mb-2" th:if="${product.averageRating == 0}" style="margin-bottom: 4px;">
+                <span style="color: #666;">평점 없음</span>
+            </div>
+            <div class="option-label" style="margin-bottom: 4px;">가격</div>
+            <div class="product-price" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"
+                 style="margin-bottom: 4px; font-size: 1.2rem; font-weight: 600; color: var(--brand-point);">
+            </div>
+            <!-- 옵션 선택 + 수량 -->
+            <div style="background: linear-gradient(135deg, rgba(141, 90, 65, 0.05), rgba(141, 90, 65, 0.02)); border-radius: 12px; padding: 24px; margin-bottom: 0; border: 1px solid rgba(141, 90, 65, 0.1);">
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <select id="modelSelect"
+                            style="flex: 2; min-width: 0; padding: 14px 18px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 1rem; background: linear-gradient(145deg, #ffffff, #f8f9fa); color: #495057; font-weight: 500; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <option value="" style="padding: 8px; background: #fff; color: #333; font-weight: 500;">옵션을 선택하세요</option>
+                        <option th:each="model : ${product.productModels}"
+                                th:value="${model.id}"
+                                th:data-attr="${model.attributeValueIdsStr}"
+                                th:data-price="${model.price}"
+                                th:data-stock="${model.prStock}"
+                                th:text="|${model.productModelSelect} / ${#numbers.formatInteger(model.price, 3, 'COMMA')}원 / 재고:${model.prStock}|"
+                                style="padding: 8px; background: #fff; color: #333; font-weight: 500;">
+                        </option>
+                    </select>
+                    <input type="number" name="count" id="count" value="1" min="1"
+                           style="flex: 1; min-width: 0; padding: 14px 18px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 1rem; text-align: center; max-width: 100px; background: linear-gradient(145deg, #ffffff, #f8f9fa); color: #495057; font-weight: 500; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"/>
+                </div>
+                <div id="modelInfo" style="margin-top: 12px; padding: 12px; background: rgba(255,255,255,0.8); border-radius: 6px; display: none;"></div>
+            </div>
+            <!-- 장바구니/구매/찜 버튼 (옵션 영역 바로 아래, 동일 너비 3등분) -->
+            <form th:action="@{/wishlist/toggle}" method="post" id="productForm" style="margin-top: 0;">
+                <input type="hidden" id="productId" name="productId" th:value="${product.id}"/>
+                <input type="hidden" id="actionType" name="actionType" value="cart"/>
+                <div class="product-actions" style="display: flex; gap: 0; margin-top: 10px; width: 100%;">
+                    <button type="button" id="cartButton" onclick="submitForm('cart')"
+                            style="flex: 1; background: var(--brand-point); color: #fff; border: none; border-radius: 6px 0 0 6px; padding: 14px 0; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border-right: 1.5px solid #fff;">
+                        🛒 장바구니
+                    </button>
+                    <button type="button" id="buyButton"
+                            style="flex: 1; background: #28a745; color: #fff; border: none; border-radius: 0; padding: 14px 0; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border-right: 1.5px solid #fff;"
+                            onclick="submitForm('buy')">💳 구매하기
+                    </button>
+                    <button type="submit"
+                            style="flex: 1; background: #fff; color: var(--brand-point); border: 1.5px solid var(--brand-point); border-radius: 0 6px 6px 0; padding: 14px 0; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s;"
+                            th:text="${product.liked} ? '💔 찜 취소' : '❤️ 찜하기'"></button>
+                </div>
+            </form>
+            <!-- 결제 가격 -->
+            <div style="display:none;">
+            <span id="selectedPrice" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"
+                  th:data-initial-price="${product.price}"></span>
+            </div>
+            <div style="margin-top:10px; text-align: right;">
+                <h2 style="margin: 0.5em 0;">결제 금액</h2>
+                <h3 id="totalPrice" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"
+                    style="font-size: 2.8rem; font-weight: bold; color: var(--brand-point); margin: 0.5em 0;"></h3>
+            </div>
+        </div>
+    </div>
+    <!-- 상품 상세정보 섹션 위에 탭 네비게이션(상세/리뷰/문의) 이동 -->
+    <div class="main-top-tabs" style="display: flex; justify-content: center; gap: 16px; margin: 48px 0 24px 0;">
+        <button type="button" class="main-top-tab-btn" onclick="scrollToSection('product-detail-section')">📋 상세정보
+        </button>
+        <button type="button" class="main-top-tab-btn" onclick="scrollToSection('review-section')">⭐ 리뷰</button>
+        <button type="button" class="main-top-tab-btn" onclick="scrollToSection('qna-section')">❓ 문의</button>
+    </div>
+    <style>
+        .main-top-tab-btn {
+            background: #fff;
+            color: var(--brand-point);
+            border: 2px solid var(--brand-point);
+            border-radius: 6px;
+            padding: 12px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 0;
+        }
+        .main-top-tab-btn:hover, .main-top-tab-btn.active {
+            background: var(--brand-point);
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .main-top-tabs {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .main-top-tab-btn {
+                width: 100%;
+            }
+        }
+        .back-list-btn {
+            background: var(--brand-point);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .back-list-btn:hover {
+            background: #8d5a41;
+        }
+        
+        /* Select 옵션 스타일링 */
+        #modelSelect {
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 2px solid #e9ecef;
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        #modelSelect:focus {
+            outline: none;
+            border-color: #8d5a41;
+            box-shadow: 0 0 0 3px rgba(141, 90, 65, 0.1);
+            background: #fff;
+        }
+        
+        #modelSelect:hover {
+            border-color: #8d5a41;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        /* 수량 입력 필드 스타일링 */
+        #count {
+            transition: all 0.2s ease;
+        }
+        
+        #count:focus {
+            outline: none;
+            border-color: #8d5a41;
+            box-shadow: 0 0 0 3px rgba(141, 90, 65, 0.1);
+            background: #fff;
+        }
+        
+        #count:hover {
+            border-color: #8d5a41;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        /* 옵션 컨테이너 스타일링 */
+        .product-options {
+            position: relative;
+        }
+        
+        .product-options::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(141, 90, 65, 0.05), rgba(141, 90, 65, 0.02));
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        
+        /* 옵션 라벨 스타일링 */
+        .option-label {
+            display: block;
+            font-weight: 600;
+            color: #8d5a41;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+    <!-- 상품 상세정보 섹션 -->
+    <div id="product-detail-section">
+        <div th:replace="~{productdetail/detail :: productdetail}"></div>
+    </div>
+    <!-- 리뷰/QnA 탭 삽입 영역 -->
+    <div id="tab-section-placeholder"></div>
+    <div class="mt-5">
+        <!-- 탭 메뉴 -->
+        <div class="tab-menu" style="display: flex; border-bottom: 2px solid #eee; margin-bottom: 16px;">
+            <button class="tab-button active" data-target="review-section"
+                    style="background: none; border: none; border-bottom: 2px solid var(--brand-point); color: var(--brand-point); font-weight: bold; padding: 16px 24px; cursor: pointer; transition: all 0.2s;">
+                리뷰
+            </button>
+            <button class="tab-button" data-target="qna-section"
+                    style="background: none; border: none; border-bottom: 2px solid transparent; color: #666; font-weight: bold; padding: 16px 24px; cursor: pointer; transition: all 0.2s;">
+                Q&A
+            </button>
+        </div>
+        <!-- 리뷰 영역 -->
+        <div id="review-section" class="tab-content-section" style="margin-top: 16px;">
+            <div th:replace="~{review/review :: reviewboard}"></div>
+        </div>
+        <!-- Qna 영역 -->
+        <div id="qna-section" class="tab-content-section" style="display: none; margin-top: 16px;">
+            <div id="qna-content" th:replace="~{qna/qna :: qnaboard}"></div>
+        </div>
+    </div>
+    <!-- 플로팅 네비게이션 리모콘 -->
+    <!-- (플로팅 네비게이션은 2차 적용에서 개선) -->
+    <div th:replace="~{index/footer :: footer}"></div>
+    <div th:replace="~{index/floating-chatbot :: floating-chatbot}"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:inline="javascript">
+        window.allAttributeValues = /*[[${attributeValues}]]*/ [];
+    </script>
+    <script src="/js/product/detail.js" defer></script>
+    <script src="/js/review/review.js" defer></script>
+    <script src="/js/qna/qna.js" defer></script>
+    <script>
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+    <script>
+        // 탭 시스템 (기본 동작만 유지)
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content-section');
+
+            // 초기화: 모든 콘텐츠 숨김, 버튼 비활성화
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.style.display = 'none');
+
+            // 리뷰 탭을 기본으로 활성화
+            const defaultTab = document.querySelector('.tab-button[data-target="review-section"]');
+            const defaultContent = document.getElementById('review-section');
+            if (defaultTab && defaultContent) {
+                defaultTab.classList.add('active');
+                defaultContent.style.display = 'block';
+            }
+
+            // 탭 클릭 시 동작
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    tabContents.forEach(content => content.style.display = 'none');
+                    const target = this.getAttribute('data-target');
+                    document.getElementById(target).style.display = 'block';
+                });
+            });
+        });
+        // 스크롤 함수
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'auto' });
+            }
+        }
+    </script>
+</body>
+</html>

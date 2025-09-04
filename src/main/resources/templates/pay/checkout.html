@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+    <style>
+        body {
+            margin: 0;
+            background: #fff;
+            color: #4A4947;
+            font-family: 'Arial', sans-serif;
+            padding-top: 70px !important;
+        }
+        main {
+            max-width: 1100px;
+            width: 100%;
+            margin: 60px auto 60px auto;
+            background-color: #FFF;
+            padding: 40px 40px 30px 40px;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #B17457;
+            margin: 32px 0 24px 0;
+            text-align: center;
+        }
+        .payment-container {
+            width: 100%;
+        }
+        .payment-methods {
+            background: #fff;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+        .agreement {
+            background: #F9F7F0;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+        .submit-section {
+            text-align: center;
+            margin-top: 32px;
+        }
+        #payButton {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 16px 48px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #payButton:hover {
+            background: #4A4947;
+        }
+        @media (max-width: 1200px) {
+            main {
+                padding: 24px 2vw 40px 2vw;
+            }
+        }
+        @media (max-width: 700px) {
+            main {
+                padding: 16px 2vw 32px 2vw;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{index/header :: header}"></div>
+
+<main>
+    <div class="payment-container">
+        <h1>결제하기</h1>
+        <div class="payment-methods" id="payment-method"></div>
+        <div class="agreement" id="agreement"></div>
+        <div class="submit-section">
+            <button id="payButton">결제하기</button>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{index/footer :: footer}"></div>
+<script th:inline="javascript">
+    const order = /*[[${orderDto}]]*/ {};
+    const productName = order.items[0].productName;
+    const orderId = order.orderId;
+    const amount = [[${amount}]];
+    const generateRandomString = () =>
+        window.btoa(Math.random()).slice(0, 20);
+    const paymentKey = generateRandomString();
+    const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
+    let isPaymentSuccess = false;
+
+    const paymentWidget = PaymentWidget(clientKey, paymentKey);
+    console.log("확인: ", orderId, amount, paymentKey);
+
+    // 결제 UI 렌더링
+    const paymentMethodWidget = paymentWidget.renderPaymentMethods(
+        "#payment-method",
+        {value: amount},
+        {variantKey: "DEFAULT"}
+    );
+
+    // 이용약관 UI 렌더링
+    paymentWidget.renderAgreement("#agreement", {variantKey: "AGREEMENT"});
+
+    // 결제하기 버튼 누르면 결제창 띄우기
+    document.getElementById("payButton").addEventListener("click", function () {
+        paymentWidget.requestPayment({
+            orderId: orderId,
+            orderName: productName,
+            successUrl: window.location.origin + "/success",
+            failUrl: window.location.origin + "/fail",
+            customerEmail: order.email, // 회원 이메일
+            customerName: order.userName,  // 회원 이름
+            customerMobilePhone: order.phone,
+        }).then(() => {
+            isPaymentSuccess = true; // 결제 성공 시
+            console.log('결제 성공:', isPaymentSuccess);
+        }).catch(error => {
+            isPaymentSuccess = false; // 결제 실패 시
+            console.error('결제 요청 실패:', error);
+        });
+    });
+</script>
+
+</body>
+</html>

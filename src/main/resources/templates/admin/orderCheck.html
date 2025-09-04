@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 주문 확인</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: #fff;
+            color: #4A4947;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            width: 100%;
+            padding-top: 70px !important;
+        }
+        .admin-container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 0 80px 0;
+            box-sizing: border-box;
+        }
+        .page-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #B17457;
+            margin-bottom: 32px;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            color: #000000;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+        th, td {
+            border: 1px solid #E0E0E0;
+            padding: 12px 8px;
+            text-align: center;
+        }
+        th {
+            background: #F9F7F0;
+            color: #B17457;
+            font-weight: 600;
+        }
+        .empty-row td {
+            color: #aaa;
+            background: #F9F7F0;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+        .pagination a {
+            padding: 8px 12px;
+            text-decoration: none;
+            color: #4A4947;
+            border: 1px solid #E0E0E0;
+            background: #fff;
+            transition: all 0.2s;
+        }
+        .pagination a:hover {
+            background: #F9F7F0;
+            border-color: #B17457;
+        }
+        .pagination a.active {
+            background: #B17457;
+            color: #fff;
+            border-color: #B17457;
+        }
+        .filter-form {
+            background: #F9F7F0;
+            border: 1px solid #F9F7F0;
+            border-radius: 0;
+            padding: 0 20px;
+            margin: 0;
+        }
+        .radio-group {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 0;
+            align-items: center;
+        }
+        .radio-group label {
+            margin-bottom: 0;
+            font-weight: 400;
+            color: #4A4947;
+        }
+        input[type="radio"] {
+            accent-color: #B17457;
+            margin-right: 6px;
+        }
+        .brand-btn, button[type="submit"] {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 4px 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .brand-btn:hover, button[type="submit"]:hover {
+            background: #4A4947;
+        }
+        .chart-container {
+            background: #F9F7F0;
+            border: 1px solid #F9F7F0;
+            border-radius: 0;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        .chart-wrapper {
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #E0E0E0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin-bottom: 4px;
+        }
+        @media (max-width: 1200px) {
+            .admin-container {
+                max-width: 98vw;
+                padding: 24px 0 40px 0;
+            }
+            .filter-form {
+                padding: 16px 4vw 12px 4vw;
+            }
+        }
+        @media (max-width: 700px) {
+            .admin-container {
+                padding: 8px 0 20px 0;
+            }
+            .filter-form {
+                padding: 8px 2vw 8px 2vw;
+            }
+            .page-title {
+                font-size: 1.2rem;
+            }
+            table {
+                font-size: 0.8rem;
+            }
+            th, td {
+                padding: 8px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{index/header :: header}"></div>
+
+<div class="admin-container">
+    <h2 class="page-title">전체 주문 내역</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>주문 시간</th>
+            <th>구매자</th>
+            <th>상품</th>
+            <th>옵션</th>
+            <th>갯수</th>
+            <th>총액</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${order.users.name + ' (' + order.users.email + ')'}"></td>
+            <td>
+                <ul>
+                    <li th:each="item : ${order.orderItems}">
+                        <span th:if="${item.product != null}" th:text="${item.product.name}">상품명</span>
+                        <span th:unless="${item.product != null}">삭제된 상품</span>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li th:each="item : ${order.orderItems}">
+                        <span th:if="${item.productModel != null}" th:text="${item.productModel.productModelSelect}">옵션명</span>
+                        <span th:unless="${item.productModel != null}">삭제된 옵션</span>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li th:each="item : ${order.orderItems}" th:text="${item.count}"></li>
+                </ul>
+            </td>
+            <td th:text="${#numbers.formatInteger(order.finalAmount, 3, 'COMMA')} + '원'"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+        <span th:if="${currentPage > 0}">
+            <a th:href="@{/admin/orderCheck(page=${currentPage - 1}, range=${range})}">이전</a>
+        </span>
+
+        <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+            <a th:href="@{/admin/orderCheck(page=${i}, range=${range})}"
+               th:text="${i + 1}"
+               th:classappend="${i == currentPage} ? 'active' : ''">1</a>
+        </span>
+
+        <span th:if="${currentPage < totalPages - 1}">
+            <a th:href="@{/admin/orderCheck(page=${currentPage + 1}, range=${range})}">다음</a>
+        </span>
+    </div>
+
+    <!-- 그래프 -->
+    <div class="chart-container">
+        <h3 class="section-title">최근 7일간 주문량</h3>
+        <div class="chart-wrapper">
+            <canvas id="orderChart" width="600" height="300"></canvas>
+        </div>
+    </div>
+
+    <!-- 카테고리별 판매량 차트 -->
+    <div class="chart-container">
+        <h3 class="section-title">카테고리별 판매 현황</h3>
+
+        <div class="filter-form">
+            <div class="radio-group">
+                <label><input type="radio" name="range" value="month" checked> 이번 달</label>
+                <label><input type="radio" name="range" value="all"> 전체 기간</label>
+                <button id="loadChartBtn" type="button" class="brand-btn">조회</button>
+            </div>
+        </div>
+
+        <div class="chart-wrapper">
+            <canvas id="categoryChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    const rawLabels = JSON.parse(/*[[${labelsJson}]]*/ '[]');
+    const chartCounts = JSON.parse(/*[[${countsJson}]]*/ '[]');
+
+    const ctx = document.getElementById('orderChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: rawLabels,
+            datasets: [{
+                label: '주문 수',
+                data: chartCounts,
+                borderColor: 'rgba(177, 116, 87, 1)',
+                backgroundColor: 'rgba(177, 116, 87, 0.1)',
+                borderWidth: 2,
+                tension: 0.2,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: '날짜 (월/일)',
+                        color: '#4A4947'
+                    },
+                    grid: {
+                        color: 'rgba(224, 224, 224, 0.5)'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    },
+                    title: {
+                        display: true,
+                        text: '주문 수',
+                        color: '#4A4947'
+                    },
+                    grid: {
+                        color: 'rgba(224, 224, 224, 0.5)'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#4A4947'
+                    }
+                }
+            }
+        }
+    });
+
+    const categoryRawData = JSON.parse(/*[[${categoryChartData}]]*/ '[]');
+    const range = /*[[${range}]]*/ 'month';
+
+    // 이번달 조회 시 제목에 (n월) 표시, 전체 기간 조회 시 "(전체)"로 표시
+    let displayMonth = '';
+    if (range === 'all') {
+        displayMonth = '전체';
+    } else {
+        // 이번달 조회 시 현재 월 표시
+        const now = new Date();
+        displayMonth = (now.getMonth() + 1) + '월';
+    }
+    
+    // 카테고리별로 데이터 집계
+    const categoryCountMap = {};
+    categoryRawData.forEach(row => {
+        const category = row.category;
+        const count = row.count;
+        if (!categoryCountMap[category]) categoryCountMap[category] = 0;
+        categoryCountMap[category] += count;
+    });
+
+    const categoryChartCanvas = document.getElementById('categoryChart');
+    let categoryChart = null;
+
+    function drawCategoryChart(rawData, range) {
+        const categoryCountMap = {};
+        rawData.forEach(row => {
+            const category = row.category;
+            const count = row.count;
+            if (!categoryCountMap[category]) categoryCountMap[category] = 0;
+            categoryCountMap[category] += count;
+        });
+
+        const categories = Object.keys(categoryCountMap);
+        const counts = categories.map(c => categoryCountMap[c]);
+        const displayMonth = (range === 'all') ? '전체' : (new Date().getMonth() + 1) + '월';
+
+        if (categoryChart) {
+            categoryChart.destroy();
+        }
+
+        categoryChart = new Chart(categoryChartCanvas, {
+            type: 'bar',
+            data: {
+                labels: categories,
+                datasets: [{
+                    label: '판매 수',
+                    data: counts,
+                    backgroundColor: 'rgba(177, 116, 87, 0.7)',
+                    borderColor: 'rgba(177, 116, 87, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'x',
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: '카테고리별 판매 수 (' + displayMonth + ')',
+                        color: '#4A4947'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: '카테고리', color: '#4A4947' },
+                        grid: { color: 'rgba(224, 224, 224, 0.5)' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: '판매 수', color: '#4A4947' },
+                        ticks: { precision: 0 },
+                        grid: { color: 'rgba(224, 224, 224, 0.5)' }
+                    }
+                }
+            }
+        });
+    }
+
+    document.getElementById('loadChartBtn').addEventListener('click', function () {
+        const selectedRange = document.querySelector('input[name="range"]:checked').value;
+
+        fetch(`/admin/orderChartData?range=${selectedRange}`)
+            .then(res => res.json())
+            .then(data => drawCategoryChart(data, selectedRange));
+    });
+
+    // 페이지 로드시 기본 차트
+    window.addEventListener('DOMContentLoaded', () => {
+        fetch('/admin/orderChartData?range=month')
+            .then(res => res.json())
+            .then(data => drawCategoryChart(data, 'month'));
+    });
+
+</script>
+
+<div th:replace="~{index/footer :: footer}"></div>
+</body>
+</html>

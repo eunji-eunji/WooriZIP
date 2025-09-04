@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 상세정보 관리</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --brand-bg: #FFFFFF;
+          --brand-text: #4A4947;
+          --brand-point-bg: #F9F7F0;
+          --brand-point: #B17457;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          background: var(--brand-bg);
+          color: var(--brand-text);
+          font-family: 'Noto Sans KR', sans-serif;
+          line-height: 1.6;
+                padding-top: 70px !important;
+        }
+
+        main {
+          max-width: 1100px;
+          width: 100%;
+          margin: 0 auto;
+          padding: 60px 20px 80px 20px;
+        }
+
+        .page-title {
+          font-size: 2rem;
+          font-weight: bold;
+          color: #B17457;
+          margin-bottom: 32px;
+        }
+
+        .section-title {
+          color: var(--brand-text);
+          font-size: 1.4rem;
+          font-weight: bold;
+          margin: 32px 0 20px 0;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .dropdown-section {
+          background: var(--brand-point-bg);
+          border-radius: 8px;
+          padding: 24px;
+          margin-bottom: 32px;
+          border: 1px solid #e0e0e0;
+        }
+
+        .dropdown-section h5 {
+          color: var(--brand-text);
+          font-size: 1.2rem;
+          font-weight: 600;
+          margin-bottom: 16px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .form-label {
+          font-size: 1rem;
+          font-weight: 500;
+          color: var(--brand-text);
+          margin-bottom: 8px;
+          display: block;
+        }
+
+        .form-select {
+          width: 100%;
+          padding: 12px 16px;
+          font-size: 1rem;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          background: #fff;
+          color: var(--brand-text);
+          transition: border-color 0.2s;
+        }
+
+        .form-select:focus {
+          outline: none;
+          border-color: var(--brand-point);
+        }
+
+        .btn {
+          padding: 12px 24px;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 1rem;
+          font-weight: 500;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          transition: all 0.2s;
+        }
+
+        .btn-primary {
+          background: var(--brand-point);
+          color: #fff;
+        }
+
+        .btn-primary:hover {
+          background: #8d5a41;
+        }
+
+        .btn-primary:disabled {
+          background: #ccc;
+          cursor: not-allowed;
+        }
+
+        .btn-outline-primary {
+          background: transparent;
+          color: var(--brand-point);
+          border: 1px solid var(--brand-point);
+        }
+
+        .btn-outline-primary:hover {
+          background: var(--brand-point);
+          color: #fff;
+        }
+
+        .btn-outline-success {
+          background: transparent;
+          color: #28a745;
+          border: 1px solid #28a745;
+        }
+
+        .btn-outline-success:hover {
+          background: #28a745;
+          color: #fff;
+        }
+
+        .btn-outline-danger {
+          background: transparent;
+          color: #dc3545;
+          border: 1px solid #dc3545;
+        }
+
+        .btn-outline-danger:hover {
+          background: #dc3545;
+          color: #fff;
+        }
+
+        .btn-outline-warning {
+          background: transparent;
+          color: #ffc107;
+          border: 1px solid #ffc107;
+        }
+
+        .btn-outline-warning:hover {
+          background: #ffc107;
+          color: #fff;
+        }
+
+        .btn-sm {
+          padding: 8px 16px;
+          font-size: 0.9rem;
+        }
+
+        .btn-lg {
+          padding: 10px 28px;
+          font-size: 1.1rem;
+        }
+
+        .w-100 {
+          width: 100%;
+        }
+
+        .row {
+            display: flex;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .col-md-8 {
+            flex: 1;
+        }
+
+        .col-md-4 {
+            flex: 0 0 auto;
+            width: 200px;
+        }
+
+        .alert {
+          padding: 12px 16px;
+          border-radius: 6px;
+          margin-top: 16px;
+          display: none;
+        }
+
+        .alert-info {
+          background: #d1ecf1;
+          color: #0c5460;
+          border: 1px solid #bee5eb;
+        }
+
+        .btn-group {
+          display: flex;
+          gap: 8px;
+          margin-bottom: 24px;
+        }
+
+        .btn-group .btn {
+          padding: 8px 16px;
+          font-size: 0.9rem;
+          height: 60%;
+          min-height: 32px;
+        }
+
+        .btn-check {
+          display: none;
+        }
+
+        .btn-check:checked + .btn {
+          background: var(--brand-point);
+          color: #fff;
+          border-color: var(--brand-point);
+        }
+
+        .product-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 24px;
+        }
+
+        .product-card {
+          background: #fff;
+          border: 1px solid #e0e0e0;
+          border-radius: 0;
+          overflow: hidden;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .product-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .status-badge {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          z-index: 1;
+        }
+
+        .badge {
+          padding: 4px 8px;
+          font-size: 0.75rem;
+          font-weight: 500;
+          border-radius: 4px;
+          color: #fff;
+        }
+
+        .bg-success {
+          background: #28a745;
+        }
+
+        .bg-warning {
+          background: #ffc107;
+          color: #212529;
+        }
+
+        .bg-secondary {
+          background: #6c757d;
+        }
+
+        .product-image {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          background: #f8f9fa;
+        }
+
+        .card-body {
+          padding: 16px;
+          flex-grow: 1;
+        }
+
+        .card-title {
+          font-size: 1rem;
+          font-weight: 600;
+          color: var(--brand-text);
+          margin-bottom: 8px;
+          line-height: 1.4;
+        }
+
+        .card-text {
+          font-size: 0.9rem;
+          color: #666;
+          margin-bottom: 8px;
+        }
+
+        .text-muted {
+          color: #666;
+        }
+
+        .text-primary {
+          color: var(--brand-point);
+        }
+
+        .fw-bold {
+          font-weight: 600;
+        }
+
+        .small {
+          font-size: 0.85rem;
+        }
+
+        .card-footer {
+          padding: 16px;
+          background: transparent;
+          border-top: 1px solid #e0e0e0;
+        }
+
+        .d-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .mb-1 {
+          margin-bottom: 4px;
+        }
+
+        .mb-2 {
+          margin-bottom: 8px;
+        }
+
+        .mb-3 {
+          margin-bottom: 16px;
+        }
+
+        .mb-4 {
+          margin-bottom: 24px;
+        }
+
+        .mt-2 {
+          margin-top: 8px;
+        }
+
+        .mt-3 {
+          margin-top: 16px;
+        }
+
+        .py-5 {
+          padding: 48px 0;
+        }
+
+        .text-center {
+          text-align: center;
+        }
+
+        .bi {
+          font-size: 1.1em;
+        }
+
+        @media (max-width: 1200px) {
+          .product-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+
+        @media (max-width: 900px) {
+          main {
+            padding: 40px 16px 60px 16px;
+          }
+
+          .product-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+          }
+
+          .row {
+            flex-direction: column;
+            gap: 12px;
+          }
+
+          .col-md-8, .col-md-4 {
+            flex: none;
+          }
+
+          .btn-group {
+            flex-wrap: wrap;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .product-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .page-title {
+            font-size: 1.5rem;
+          }
+
+          .section-title {
+            font-size: 1.2rem;
+          }
+        }
+    </style>
+</head>
+
+<script>
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+</script>
+
+<body>
+<div th:replace="~{index/header :: header}"></div>
+
+<main>
+    <h2 class="page-title">상품 상세정보 관리</h2>
+
+    <!-- 드롭다운 선택 방식 -->
+    <div class="dropdown-section">
+        <h5>
+            📋 빠른 선택
+        </h5>
+        <div class="row">
+            <div class="col-md-8">
+                <label for="productSelect" class="form-label">상품 선택</label>
+                <select id="productSelect" class="form-select">
+                    <option value="">상품을 선택하세요</option>
+                    <option th:each="product : ${products}"
+                            th:value="${product.id}"
+                            th:text="|${product.name} - ${product.category?.name ?: '카테고리 없음'}|"
+                            th:data-has-detail="${hasDetailMap.get(product.id)}">
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="button" id="goToDetailBtn" class="btn btn-primary btn-lg w-100" disabled>
+                    📝 관리하기
+                </button>
+            </div>
+        </div>
+        <div id="selectedInfo" class="alert alert-info">
+            ℹ️
+            <span id="infoText"></span>
+        </div>
+    </div>
+
+    <!-- 상품 카드 목록 -->
+    <div class="mb-4">
+        <h5 class="section-title">
+            전체 상품 목록
+            <span class="badge bg-secondary" th:text="${#lists.size(products)}">0</span>
+        </h5>
+
+        <!-- 필터 버튼 -->
+        <div class="btn-group" role="group">
+            <input type="radio" class="btn-check" name="filter" id="filterAll" value="all" checked>
+            <label class="btn btn-outline-primary" for="filterAll">전체</label>
+
+            <input type="radio" class="btn-check" name="filter" id="filterHas" value="has">
+            <label class="btn btn-outline-success" for="filterHas">상세정보 있음</label>
+
+            <input type="radio" class="btn-check" name="filter" id="filterNone" value="none">
+            <label class="btn btn-outline-warning" for="filterNone">상세정보 없음</label>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            <div th:each="product : ${products}"
+                 class="product-item"
+                 th:data-has-detail="${hasDetailMap.get(product.id)}">
+                <div class="product-card"
+                     th:onclick="|location.href='/products/' + ${product.id}|">
+
+                    <!-- 상태 배지 -->
+                    <div class="status-badge">
+            <span th:if="${hasDetailMap.get(product.id)}"
+                  class="badge bg-success">상세정보 있음</span>
+                        <span th:unless="${hasDetailMap.get(product.id)}"
+                              class="badge bg-warning">상세정보 없음</span>
+                    </div>
+
+                    <!-- 상품 이미지 -->
+                    <div th:if="${product.images != null && !product.images.isEmpty()}">
+                        <img th:src="${product.images[0].imageUrl}"
+                             class="product-image"
+                             alt="상품 이미지">
+                    </div>
+                    <div th:unless="${product.images != null && !product.images.isEmpty()}"
+                         class="product-image">
+                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
+                            📷
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <h6 class="card-title" th:text="${product.name}">상품명</h6>
+                        <p class="card-text text-muted small mb-2">
+                            🏷️
+                            <span th:text="${product.category?.name ?: '카테고리 없음'}">카테고리</span>
+                        </p>
+                        <p class="card-text text-primary fw-bold">
+                            💰
+                            <span th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}">가격</span>원
+                        </p>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="d-grid">
+                            <!-- 상세정보가 있는 경우 -->
+                            <div th:if="${hasDetailMap.get(product.id)}">
+                                <a th:href="@{'/admin/product-details/' + ${product.id} + '/add'}"
+                                   class="btn btn-outline-success btn-sm mb-1"
+                                   onclick="event.stopPropagation();">
+                                    ✏️ 수정하기
+                                </a>
+                                <button type="button"
+                                        class="btn btn-outline-danger btn-sm delete-detail-btn"
+                                        th:data-product-id="${product.id}"
+                                        th:data-product-name="${product.name}"
+                                        onclick="event.stopPropagation();">
+                                    🗑️ 삭제하기
+                                </button>
+                            </div>
+                            <!-- 상세정보가 없는 경우 -->
+                            <div th:unless="${hasDetailMap.get(product.id)}">
+                                <a th:href="@{'/admin/product-details/' + ${product.id} + '/add'}"
+                                   class="btn btn-outline-primary btn-sm"
+                                   onclick="event.stopPropagation();">
+                                    ➕ 등록하기
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 상품이 없을 때 -->
+        <div th:if="${#lists.isEmpty(products)}" class="text-center py-5">
+            <div style="font-size: 4rem; color: #ccc; margin-bottom: 16px;">📦</div>
+            <h5 class="text-muted mt-3">등록된 상품이 없습니다</h5>
+            <a href="/admin/products" class="btn btn-primary mt-2">
+                ➕ 상품 등록하기
+            </a>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{index/footer :: footer}"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/productdetail/admin-list.js"></script>
+
+</body>
+</html> 

@@ -1,0 +1,147 @@
+/* 레이아웃 기본 설정 */
+.product-register-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333;
+}
+
+/* 타이틀 */
+.register-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.register-subtitle {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+/* 입력 필드 그룹 */
+.product-form .form-group {
+    max-width: 600px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-form input[type="text"],
+.product-form input[type="number"],
+.product-form input[type="file"],
+.product-form select {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* 설명 텍스트 */
+.input-helper {
+    font-size: 13px;
+    color: #888;
+    margin-top: 6px;
+}
+
+/* 카테고리 드롭다운 공통 */
+.product-form select {
+    background-color: #fff;
+}
+
+/* 체크박스 속성 그룹 */
+.checkbox-group label:first-child {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.checkbox-group span {
+    display: inline-block;
+    margin-right: 12px;
+    margin-bottom: 8px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 4px;
+}
+
+/* 버튼 그룹 */
+.form-button-group {
+    display: flex;
+    gap: 16px;
+    margin-top: 30px;
+}
+
+.btn-submit {
+    padding: 12px 20px;
+    background-color: #000;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-outline {
+    padding: 12px 20px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background-color: #222;
+}
+
+.btn-outline:hover {
+    background-color: #f4f4f4;
+}
+
+/* 옵션 테이블 */
+.option-table {
+    width: 100%;
+    max-width: 700px;
+    border-collapse: collapse;
+    margin-top: 30px;
+    font-size: 14px;
+}
+
+.option-table th,
+.option-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.option-table th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .product-form .form-group {
+        max-width: 100%;
+    }
+
+    .form-button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .option-table {
+        font-size: 13px;
+    }
+}
+
+.admin-product-list-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333;
+}

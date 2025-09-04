@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 내역</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-bg: #FFFFFF;
+            --brand-text: #4A4947;
+            --brand-point-bg: #F9F7F0;
+            --brand-point: #B17457;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 16px 80px 16px;
+            font-family: 'Arial', sans-serif;
+            background: var(--brand-bg);
+            color: var(--brand-text);
+            line-height: 1.6;
+        }
+
+        main h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--brand-text);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        main table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--brand-bg);
+            border: 1px solid #e0e0e0;
+            margin-top: 20px;
+            table-layout: fixed;
+        }
+
+        main th {
+            background: var(--brand-point-bg);
+            color: var(--brand-text);
+            font-weight: 700;
+            padding: 16px 12px;
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 1.1rem;
+        }
+
+        main th:nth-child(1) { width: 15%; }
+        main th:nth-child(2) { width: 25%; }
+        main th:nth-child(3) { width: 20%; }
+        main th:nth-child(4) { width: 15%; }
+        main th:nth-child(5) { width: 15%; }
+        main th:nth-child(6) { width: 10%; }
+
+        main td {
+            padding: 16px 12px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+            word-wrap: break-word;
+        }
+
+        main td:nth-child(3) {
+            text-align: left;
+        }
+
+        main img {
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #e0e0e0;
+            width: 80px;
+            height: 80px;
+        }
+         
+        main a {
+            color: var(--brand-point);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 4px 8px;
+            border: 2px solid var(--brand-point);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            white-space: nowrap;
+            margin: 2px 0;
+            font-size: 0.9rem;
+        }
+
+        main a:hover {
+            background: var(--brand-point);
+            color: var(--brand-bg);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(177, 116, 87, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 20px 12px 60px 12px;
+            }
+
+            main h2 {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+
+            main table {
+                font-size: 0.9rem;
+                table-layout: auto;
+            }
+
+            main th, main td {
+                padding: 12px 8px;
+            }
+
+            main img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main table {
+                font-size: 0.8rem;
+            }
+
+            main th, main td {
+                padding: 8px 4px;
+            }
+
+            main img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{index/header :: header}"></div>
+<main>
+    <h2>주문 내역</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>이미지</th>
+            <th>제품명</th>
+            <th>옵션</th>
+            <th>구매일</th>
+            <th>금액</th>
+            <th>상호작용</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td colspan="6" style="padding: 0; border: none;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr th:each="item, iterStat : ${order.orderItems}">
+                        <td>
+                            <img th:if="${item.product.images != null and #lists.size(item.product.images) > 0}"
+                                 th:src="@{${item.product.images[0].imageUrl}}"
+                                 alt="상품 이미지"/>
+                        </td>
+                        <td th:text="${item.product.name}">제품명</td>
+                        <td>
+                            <span th:if="${item.productModel != null}" th:text="${item.productModel.productModelSelect}">옵션명</span>
+                            <span th:unless="${item.productModel != null}">삭제된 옵션</span>
+                        </td>
+                        <td th:if="${iterStat.index == 0}"
+                            th:rowspan="${#lists.size(order.orderItems)}"
+                            th:text="${#temporals.format(order.orderDate, 'yy/MM/dd HH:mm')}">구매일</td>
+
+                        <td th:if="${iterStat.index == 0}"
+                            th:rowspan="${#lists.size(order.orderItems)}"
+                            th:text="${#numbers.formatDecimal(order.finalAmount, 0, 'COMMA', 0, 'COMMA')} + '원'">금액</td>
+                        <td>
+                            <a th:href="@{'/products/' + ${item.product.id}}">제품보기</a><br/>
+                            <a th:href="@{'/products/' + ${item.product.id} + '#review-section'}">리뷰작성</a><br/>
+                            <a th:href="@{'/order/detail?orderId=' + ${order.orderId}}">상세보기</a>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<div th:replace="~{index/footer :: footer}"></div>
+</body>
+</html>

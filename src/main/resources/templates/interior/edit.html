@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>글 수정</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: #fff;
+            color: #4A4947;
+            font-family: 'Arial', sans-serif;
+            padding-top: 70px !important;
+        }
+        main {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 32px 0 64px 0;
+            box-sizing: border-box;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #B17457;
+            margin: 32px 0 24px 0;
+            text-align: center;
+        }
+        .container {
+            width: 100%;
+        }
+        #editForm {
+            background: #fff;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #4A4947;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        .form-group input[type="text"], .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            font-size: 1rem;
+            font-family: inherit;
+            box-sizing: border-box;
+            outline: none;
+            transition: border 0.2s;
+            background: #fff;
+            color: #4A4947;
+        }
+        .form-group input[type="text"]:focus, .form-group textarea:focus {
+            border: 1.5px solid #B17457;
+            background: #F9F7F0;
+        }
+        .form-group textarea {
+            resize: none;
+            min-height: 200px;
+        }
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #E0E0E0;
+            border-radius: 0;
+            background: #fff;
+            color: #4A4947;
+            font-size: 1rem;
+        }
+        .form-group input[type="file"]:focus {
+            border: 1.5px solid #B17457;
+            background: #F9F7F0;
+        }
+        #existingImages {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+        .image-preview {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border: 1px solid #E0E0E0;
+            background: #F9F7F0;
+            border-radius: 0;
+        }
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        .remove-btn:hover {
+            background: #c82333;
+            transform: scale(1.1);
+        }
+        #previewArea {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .btn-box {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+        .btn-box button {
+            background: #B17457;
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 12px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-box button:hover {
+            background: #4A4947;
+        }
+        .btn-box button:last-child {
+            background: #4A4947;
+        }
+        .btn-box button:last-child:hover {
+            background: #B17457;
+        }
+        @media (max-width: 1200px) {
+            main {
+                padding: 24px 2vw 40px 2vw;
+            }
+        }
+        @media (max-width: 700px) {
+            main {
+                padding: 16px 2vw 32px 2vw;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            #editForm {
+                padding: 20px;
+            }
+            .btn-box {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn-box button {
+                width: 200px;
+            }
+            #existingImages, #previewArea {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<script>
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+</script>
+
+<body>
+<div th:replace="~{index/header :: header}"></div>
+
+<main>
+    <div class="container">
+        <h2>글 수정</h2>
+
+        <form id="editForm" enctype="multipart/form-data" th:object="${dto}">
+            <input type="hidden" name="postId" th:value="*{postId}"/>
+            <input type="hidden" name="filePaths" th:value="*{filePaths}"/>
+            <input type="hidden" name="fileNames" th:value="*{fileNames}"/>
+            <input type="hidden" name="deleteIndexes" id="deleteIndexes"/>
+
+            <div class="form-group">
+                <label>제목</label>
+                <input type="text" name="title" th:value="*{title}" required>
+            </div>
+
+            <div class="form-group">
+                <label>내용</label>
+                <textarea name="content" rows="8" required th:text="*{content}"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>기존 이미지</label>
+                <div id="existingImages">
+                    <div th:each="path, stat : ${#strings.arraySplit(dto.filePaths, ',')}"
+                         class="image-container"
+                         th:data-index="${stat.index}">
+                        <img th:src="@{${path}}" class="image-preview"/>
+                        <button type="button" class="remove-btn" onclick="removeExistingImage(this)">✕</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>이미지 추가 (최대 8장)</label>
+                <input type="file" id="imageInput" accept="image/*" multiple>
+                <small style="color: #666; font-size: 0.9rem; margin-top: 4px; display: block;">
+                    ※ 이미지를 첨부하지 않으면 기본 이미지가 자동으로 제공됩니다.
+                </small>
+                <div id="previewArea"></div>
+            </div>
+
+            <div class="btn-box">
+                <button type="submit">수정 완료</button>
+                <button type="button" th:onclick="'location.href=\'/interior/\' + ' + ${dto.postId}">수정 취소</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<div th:replace="~{index/footer :: footer}"></div>
+<script src="/js/interior/edit.js"></script>
+</body>
+</html>
